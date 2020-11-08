@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{c9a479e0-6135-4f92-9208-02e1228138d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Headers">
+      <UniqueIdentifier>{7733c0e3-ccf9-4443-b461-f4d432e31c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.MainGame">
+      <UniqueIdentifier>{e92e91b4-9275-45fc-9052-e78eb345aefe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object">
+      <UniqueIdentifier>{e03b5a31-ac8f-44a9-9614-a4642af220e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\00.Player">
+      <UniqueIdentifier>{8e40b883-cb49-4cbd-a7c3-a53d120c9985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.Arrow">
+      <UniqueIdentifier>{ca109d3e-b9e5-4894-aa9c-a31c16dc588a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager">
+      <UniqueIdentifier>{0647b66a-3a5a-41fb-a5b6-fe81ed4dbcc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\00.AbstractFactory">
+      <UniqueIdentifier>{2c3c99e7-ad80-48aa-9f5b-a128ca2a7fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\01.ObjMgr">
+      <UniqueIdentifier>{ec99d15a-c04d-4245-9163-20f8be2dfa61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.Arrow\Arrow%28Guide%29">
+      <UniqueIdentifier>{3150809a-94bc-4c3f-85ad-507d7559865a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.Arrow\Arrow%28Normal%29">
+      <UniqueIdentifier>{0956ef12-4681-4d9e-b123-9e62635cffdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\02.KeyMgr">
+      <UniqueIdentifier>{6f44a34c-b7e3-4e19-983a-f123c92350c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\03.DeviceMgr">
+      <UniqueIdentifier>{99a0234f-f26f-4f09-8b77-89ccd82f6e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\04.TextureMgr">
+      <UniqueIdentifier>{72a08955-eff2-4152-80db-22c02e5a33f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\04.TextureMgr\SingleTexture">
+      <UniqueIdentifier>{df247094-c278-477b-b026-4afb761502ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\04.TextureMgr\MultiTexture">
+      <UniqueIdentifier>{52ddaaf7-2229-4fb0-b43a-cfa516a500b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.Lager">
+      <UniqueIdentifier>{ca8275b7-fe4a-49ce-a49f-3ee31df51bd5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>01.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01.Object\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMgr.h">
+      <Filter>98.Manager\00.AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>98.Manager\01.ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>01.Object\01.Arrow\Arrow%28Guide%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow2.h">
+      <Filter>01.Object\01.Arrow\Arrow%28Normal%29</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>98.Manager\02.KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic_Device.h">
+      <Filter>98.Manager\03.DeviceMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>98.Manager\04.TextureMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMgr.h">
+      <Filter>98.Manager\04.TextureMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTexture.h">
+      <Filter>98.Manager\04.TextureMgr\SingleTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTexture.h">
+      <Filter>98.Manager\04.TextureMgr\MultiTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Lager.h">
+      <Filter>01.Object\02.Lager</Filter>
+    </ClInclude>
+    <ClInclude Include="Warning.h">
+      <Filter>01.Object\02.Lager</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="HoldBack.h">
+      <Filter>01.Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>01.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01.Object\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>98.Manager\01.ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>01.Object\01.Arrow\Arrow%28Guide%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow2.cpp">
+      <Filter>01.Object\01.Arrow\Arrow%28Normal%29</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>98.Manager\02.KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic_Device.cpp">
+      <Filter>98.Manager\03.DeviceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>98.Manager\04.TextureMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMgr.cpp">
+      <Filter>98.Manager\04.TextureMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTexture.cpp">
+      <Filter>98.Manager\04.TextureMgr\SingleTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTexture.cpp">
+      <Filter>98.Manager\04.TextureMgr\MultiTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="Lager.cpp">
+      <Filter>01.Object\02.Lager</Filter>
+    </ClCompile>
+    <ClCompile Include="Warning.cpp">
+      <Filter>01.Object\02.Lager</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="HoldBack.cpp">
+      <Filter>01.Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Client.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>99.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
