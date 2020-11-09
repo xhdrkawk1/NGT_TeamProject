@@ -12,6 +12,6 @@ public:
 
 	int m_iConnect_Player = 0;
 
-	list<SOCKET> m_ClientSocketList;
+	vector<SOCKET> m_ClientSocketList;
 };
 

@@ -36,7 +36,6 @@ int main(int argc, char* argv[])
     CDataMgr::GetInstance();
     
     int retval = 0;
-
     /*__________________________________________________________________________________________________________
    [ Ready WSA ]
     ____________________________________________________________________________________________________________*/
@@ -106,15 +105,17 @@ int main(int argc, char* argv[])
             err_display("accept()");
             break;
         }
-
-
+       
         // Print ClientInfo.
         cout << "[TCP Server] Client Connect \t IP Address = " << inet_ntoa(tClientAddr.sin_addr)
             << "\t Port Number = " << ntohs(tClientAddr.sin_port) << endl;
         cout << endl;
         CDataMgr::GetInstance()->m_iConnect_Player++;
         CDataMgr::GetInstance()->m_ClientSocketList.push_back(pClientSocket);
-
+        for (auto& vec : CDataMgr::GetInstance()->m_ClientSocketList)
+        {
+            cout << &vec << endl;
+        }
         // 1Client - 1Thread Context Model.
         // Create Thread Context.
         hThread = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
