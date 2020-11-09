@@ -6,6 +6,32 @@
 #include "MainGame.h"
 #define MAX_LOADSTRING 100
 
+void err_quit(char* msg)
+{
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+        NULL, WSAGetLastError(),
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&lpMsgBuf, 0, NULL);
+    MessageBox(NULL, (LPCTSTR)lpMsgBuf, (LPTSTR)msg, MB_ICONERROR);
+    LocalFree(lpMsgBuf);
+    exit(1);
+}
+
+// 소켓 함수 오류 출력
+void err_display(char* msg)
+{
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+        NULL, WSAGetLastError(),
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&lpMsgBuf, 0, NULL);
+    printf("[%s] %s", msg, (char*)lpMsgBuf);
+    LocalFree(lpMsgBuf);
+}
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -43,9 +69,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	msg.message = WM_NULL;
 	DWORD dwOldTime = GetTickCount();
 
+
+    int retval;
+    // 윈속 초기화
+    WSADATA wsa;
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+        return 1;
+    // socket()
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == INVALID_SOCKET) err_quit("socket()");
+    // connect()
+    SOCKADDR_IN serveraddr;
+    ZeroMemory(&serveraddr, sizeof(serveraddr));
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_addr.s_addr = inet_addr(SERVERIP);
+    serveraddr.sin_port = htons(SERVERPORT);
+    retval = connect(sock, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
+    if (retval == SOCKET_ERROR) err_quit("connect()");
+
 	srand(unsigned int(time(NULL)));
 	CMainGame MainGame;
 	MainGame.Initialize();
+
+
+
     // 기본 메시지 루프입니다.
 	while (msg.message != WM_QUIT)
 	{
@@ -65,6 +112,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 	MainGame.Release();
+
+
+    closesocket(sock);
+
+    // 윈속 종료
+    WSACleanup();
+
     return (int) msg.wParam;
 }
 

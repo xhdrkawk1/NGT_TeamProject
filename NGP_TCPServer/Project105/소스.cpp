@@ -1,11 +1,4 @@
-#pragma comment(lib, "ws2_32")
-#include <WinSock2.h>
-#include <iostream>
-
-
-using namespace std;
-#define SERVERPORT 9000
-
+#include "CommonHeader.h"
 
 
 // 소켓 함수 오류 출력 후 종료
@@ -40,6 +33,8 @@ int ReceiveData(SOCKET s, char* buf, int len, int flags, u_short client_portnum)
 
 int main(int argc, char* argv[])
 {
+    CDataMgr::GetInstance();
+    
     int retval = 0;
 
     /*__________________________________________________________________________________________________________
@@ -81,7 +76,7 @@ int main(int argc, char* argv[])
     if (SOCKET_ERROR == retval)
         err_quit("listen()");
 
-
+   
     /*__________________________________________________________________________________________________________
     [ Ready ClientSocket ]
     ____________________________________________________________________________________________________________*/
@@ -102,6 +97,7 @@ int main(int argc, char* argv[])
         // Accept Client
         iAddrLen = sizeof(tClientAddr);
 
+        
         pClientSocket = accept(pListenSocket,           // 클라이언트 접속을 수용할 목적으로 만든 소켓.
             (SOCKADDR*)&tClientAddr, // 접속한 클라이언트의 주소 정보가 채워진다.
             &iAddrLen);              // accept() 함수가 채워넣은 주소 정보의 크기.
@@ -111,11 +107,13 @@ int main(int argc, char* argv[])
             break;
         }
 
+
         // Print ClientInfo.
         cout << "[TCP Server] Client Connect \t IP Address = " << inet_ntoa(tClientAddr.sin_addr)
             << "\t Port Number = " << ntohs(tClientAddr.sin_port) << endl;
         cout << endl;
-
+        CDataMgr::GetInstance()->m_iConnect_Player++;
+        CDataMgr::GetInstance()->m_ClientSocketList.push_back(pClientSocket);
 
         // 1Client - 1Thread Context Model.
         // Create Thread Context.

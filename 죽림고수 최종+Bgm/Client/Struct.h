@@ -13,12 +13,3 @@ typedef struct tagTexture
 
 	D3DXIMAGE_INFO	   tImgInfo;
 }TEXINFO;
-
-typedef struct tagTile
-{
-	D3DXVECTOR3 vPos;
-	D3DXVECTOR3 vSize;
-
-	BYTE		byDrawID;
-	BYTE		byOption;
-}TILE;

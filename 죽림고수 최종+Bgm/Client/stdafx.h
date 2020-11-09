@@ -35,3 +35,8 @@ using namespace std;
 #include "Include.h"
 
 //Mgr
+
+
+//ws
+#pragma comment(lib, "ws2_32")
+#include <WinSock2.h>
