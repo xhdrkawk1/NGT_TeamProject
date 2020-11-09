@@ -1,54 +1,62 @@
-c:\users\administrator\desktop\late_game\client\debug\client.pch
-c:\users\administrator\desktop\late_game\client\debug\vc140.pdb
-c:\users\administrator\desktop\late_game\client\debug\vc140.idb
-c:\users\administrator\desktop\late_game\client\debug\stdafx.obj
-c:\users\administrator\desktop\late_game\client\debug\arrow.obj
-c:\users\administrator\desktop\late_game\client\debug\arrow2.obj
-c:\users\administrator\desktop\late_game\client\debug\client.obj
-c:\users\administrator\desktop\late_game\client\debug\graphic_device.obj
-c:\users\administrator\desktop\late_game\client\debug\keymgr.obj
-c:\users\administrator\desktop\late_game\client\debug\multitexture.obj
-c:\users\administrator\desktop\late_game\client\debug\obj.obj
-c:\users\administrator\desktop\late_game\client\debug\objmgr.obj
-c:\users\administrator\desktop\late_game\client\debug\player.obj
-c:\users\administrator\desktop\late_game\client\debug\singletexture.obj
-c:\users\administrator\desktop\late_game\client\debug\texture.obj
-c:\users\administrator\desktop\late_game\client\debug\texturemgr.obj
-c:\users\administrator\desktop\late_game\client\debug\maingame.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\client.pch
-c:\users\administrator\desktop\late_game (2)\client\debug\vc140.pdb
-c:\users\administrator\desktop\late_game (2)\client\debug\vc140.idb
-c:\users\administrator\desktop\late_game (2)\client\debug\stdafx.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\arrow.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\arrow2.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\client.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\graphic_device.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\keymgr.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\lager.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\maingame.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\multitexture.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\obj.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\objmgr.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\player.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\singletexture.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\texture.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\texturemgr.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\warning.obj
-c:\users\administrator\desktop\late_game (2)\client\debug\collisionmgr.obj
-c:\users\administrator\desktop\late_game\debug\client.ilk
-c:\users\administrator\desktop\late_game\debug\client.exe
-c:\users\administrator\desktop\late_game\debug\client.pdb
-c:\users\administrator\desktop\late_game (2)\debug\client.ilk
-c:\users\administrator\desktop\late_game (2)\debug\client.exe
-c:\users\administrator\desktop\late_game (2)\debug\client.pdb
-c:\users\administrator\desktop\late_game\client\debug\client.res
-c:\users\administrator\desktop\late_game (2)\client\debug\client.res
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\cl.command.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\cl.read.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\cl.write.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\link.command.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\link.read.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\link.write.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\rc.command.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\rc.read.1.tlog
-c:\users\administrator\desktop\late_game (2)\client\debug\client.tlog\rc.write.1.tlog
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\client.pch
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\vc142.pdb
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\vc142.idb
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\stdafx.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\warning.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\texturemgr.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\texture.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\singletexture.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\player.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\objmgr.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\obj.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\multitexture.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\maingame.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\lager.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\keymgr.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\holdback.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\graphic_device.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\collisionmgr.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\client.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\arrow2.obj
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\arrow.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\vc142.pdb
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\vc142.idb
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\warning.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\collisionmgr.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.pch
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\stdafx.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\texturemgr.obj
+f:\팀프로젝트\죽림고수 최종+bgm\debug\client.ilk
+f:\팀프로젝트\죽림고수 최종+bgm\debug\client.exe
+f:\팀프로젝트\죽림고수 최종+bgm\debug\client.pdb
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\debug\client.exe
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\debug\client.ilk
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\debug\client.pdb
+f:\팀프로젝트\죽림고수 최종+bgm\client\debug\client.res
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.res
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\arrow.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\arrow2.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\graphic_device.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\holdback.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\keymgr.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\lager.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\maingame.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\multitexture.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\obj.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\objmgr.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\player.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\singletexture.obj
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\maingame.obj.enc
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\vc140.idb
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\vc140.pdb
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\cl.command.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\cl.read.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\cl.write.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\link.command.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\link.delete.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\link.read.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\link.write.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\rc.command.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\rc.read.1.tlog
+c:\users\user\desktop\ngt_teamproject\죽림고수 최종+bgm\client\debug\client.tlog\rc.write.1.tlog

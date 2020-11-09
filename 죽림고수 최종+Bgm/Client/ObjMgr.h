@@ -1,5 +1,4 @@
 #pragma once
-
 class CObj;
 class CObjMgr
 {
@@ -19,5 +18,7 @@ public:
 	void ReleaseGroup(OBJ_ID eID);
 private:
 	OBJLIST	m_ObjLst[END];
+public:
+	SOCKET sock;
 };
 
