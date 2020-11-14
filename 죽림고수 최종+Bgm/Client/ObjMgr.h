@@ -4,13 +4,15 @@ class CObjMgr
 {
 	DECLARE_SINGLETON(CObjMgr)
 public:
-	enum OBJ_ID {PLAYER,ARROW,ARROW2,WARNING,LAGER,HOLEBACK,END };
+	enum OBJ_ID {LOGO,PLAYER,ENEMY,ARROW,ARROW2,WARNING,LAGER,HOLEBACK,END };
 public:
 	CObjMgr();
 	~CObjMgr();
 
 	CObj* GetPlayer() { return m_ObjLst[PLAYER].front(); }
-	
+	OBJLIST& GetObjList(OBJ_ID eId) { return m_ObjLst[eId]; };
+
+
 	void AddObject(CObj* pObj, OBJ_ID eID);
 	void Update();
 	void Render(HDC hDC);
@@ -18,7 +20,6 @@ public:
 	void ReleaseGroup(OBJ_ID eID);
 private:
 	OBJLIST	m_ObjLst[END];
-public:
-	SOCKET sock;
+
 };
 

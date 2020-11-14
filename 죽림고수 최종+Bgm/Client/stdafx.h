@@ -40,3 +40,15 @@ using namespace std;
 //ws
 #pragma comment(lib, "ws2_32")
 #include <WinSock2.h>
+
+/*____________________________________________________________________
+Window Consoleâ.
+______________________________________________________________________*/
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
+#endif
+
+
+#pragma warning(disable : 4251)

@@ -52,6 +52,15 @@
     <Filter Include="01.Object\02.Lager">
       <UniqueIdentifier>{ca8275b7-fe4a-49ce-a49f-3ee31df51bd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Manager\05.SocketMgr">
+      <UniqueIdentifier>{5330c976-2ff6-4908-9f7d-1bad1c9c7ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\03.Logo">
+      <UniqueIdentifier>{108e7d2b-37f1-4d19-897b-2ad6d5da42e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\04.Enemy">
+      <UniqueIdentifier>{5e2b2811-de8e-4173-a747-ef607137c701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -130,6 +139,15 @@
     <ClInclude Include="HoldBack.h">
       <Filter>01.Object</Filter>
     </ClInclude>
+    <ClInclude Include="SocketMgr.h">
+      <Filter>98.Manager\05.SocketMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>01.Object\03.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>01.Object\04.Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -183,6 +201,15 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="HoldBack.cpp">
       <Filter>01.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketMgr.cpp">
+      <Filter>98.Manager\05.SocketMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>01.Object\03.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>01.Object\04.Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

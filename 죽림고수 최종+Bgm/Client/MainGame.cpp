@@ -8,7 +8,7 @@
 #include "HoldBack.h"
 CMainGame::CMainGame()
 {
-	Game_Stage = 0;
+	/*Game_Stage = 0;*/
 }
 
 
@@ -31,7 +31,7 @@ void CMainGame::Initialize()
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Lager/WarningY.png", L"WarningY");
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Lager/LagerX.png", L"LagerX");
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Lager/LagerY.png", L"LagerY");
-
+	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/UI/Logo.png", L"Logo");
 	//Time
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/0.png", L"0");
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/1.png", L"1");
@@ -45,89 +45,99 @@ void CMainGame::Initialize()
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/9.png", L"9");
 	//Score
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/UI/GameOver.png", L"GameOver");
-	CObj *m_pPlayer = CAbstractFactory<CPlayer>::CreateObj();
-	CObjMgr::GetInstance()->AddObject(m_pPlayer, CObjMgr::PLAYER);
+	//CObj *m_pPlayer = CAbstractFactory<CPlayer>::CreateObj();
+	//CObjMgr::GetInstance()->AddObject(m_pPlayer, CObjMgr::PLAYER);
 
-	CObj *pObj = CAbstractFactory<CHoldBack>::CreateObj();
-	CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::HOLEBACK);
+	//CObj *pObj = CAbstractFactory<CHoldBack>::CreateObj();
+	//CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::HOLEBACK);
 
-	Arrow1_Interval=40.f;
-	Arrow1_Speed = 3.f;
-	Arrow2_Interval=100.f;
-	Arrow2_Speed = 2.f;
-	Lager_Interval = 200.f;
-	Stage4_Interval = 500.f;
+	//Arrow1_Interval=40.f;
+	//Arrow1_Speed = 3.f;
+	//Arrow2_Interval=100.f;
+	//Arrow2_Speed = 2.f;
+	//Lager_Interval = 200.f;
+	//Stage4_Interval = 500.f;
+
+	if (FAILED(GET_INSTANCE(CSocketMgr)->InitSocketMgr()))
+		return;
+
 }
 
 void CMainGame::Update()
 {
-	if (m_Game_Over == false)
-	{
-		CObjMgr::GetInstance()->Update();
+	
 
-		if (GetTickCount() - MainGame_Time > 0 && GetTickCount() - MainGame_Time <= 10000)
-		{
-			Game_Stage = 1;
 
-		}
-		else if (GetTickCount() - MainGame_Time > 10000 && GetTickCount() - MainGame_Time <= 20000)
-		{
-			Game_Stage = 2;
-		}
-		else if (GetTickCount() - MainGame_Time > 20000 && GetTickCount() - MainGame_Time <= 30000)
-		{
-			Game_Stage = 3;
-		}
-		else if (GetTickCount() - MainGame_Time > 30000 && GetTickCount() - MainGame_Time <= 45000)
-		{
-			Game_Stage = 4;
+	CObjMgr::GetInstance()->Update();
 
-		}
-		else if (GetTickCount() - MainGame_Time > 45000 && GetTickCount() - MainGame_Time <= 60000)
-		{
-			Game_Stage = 5;
-		}
-		//Game_Stage = 5; 난이도 테스트
-		if (Game_Stage == 1)
-		{
-			Stage1();
-		}
-		else if (Game_Stage == 2)
-		{
-			Stage1();
-			Stage2();
-		}
-		else if (Game_Stage == 3)
-		{
-			Stage1();
-			Stage2();
-			Stage3();
-		}
-		else if (Game_Stage == 4)
-		{
-			Stage1();
-			Stage2();
-			Stage3();
-			Stage4();
-		}
-		else if (Game_Stage == 5)
-		{
-			Lager_Interval = 100;
-			Arrow1_Interval = 15.f;
-			Arrow1_Speed = 5.5f;
-			Stage4_Interval = 350.f;
 
-			Stage1();
-			Stage2();
-			Stage3();
-			Stage4();
-		}
+	//if (m_Game_Over == false)
+	//{
+	//	CObjMgr::GetInstance()->Update();
 
-		fcount++;
-		fcount2++;
-		fcount3++;
-		fcount4++;
-	}
+	//	if (GetTickCount() - MainGame_Time > 0 && GetTickCount() - MainGame_Time <= 10000)
+	//	{
+	//		Game_Stage = 1;
+
+	//	}
+	//	else if (GetTickCount() - MainGame_Time > 10000 && GetTickCount() - MainGame_Time <= 20000)
+	//	{
+	//		Game_Stage = 2;
+	//	}
+	//	else if (GetTickCount() - MainGame_Time > 20000 && GetTickCount() - MainGame_Time <= 30000)
+	//	{
+	//		Game_Stage = 3;
+	//	}
+	//	else if (GetTickCount() - MainGame_Time > 30000 && GetTickCount() - MainGame_Time <= 45000)
+	//	{
+	//		Game_Stage = 4;
+
+	//	}
+	//	else if (GetTickCount() - MainGame_Time > 45000 && GetTickCount() - MainGame_Time <= 60000)
+	//	{
+	//		Game_Stage = 5;
+	//	}
+	//	//Game_Stage = 5; 난이도 테스트
+	//	if (Game_Stage == 1)
+	//	{
+	//		Stage1();
+	//	}
+	//	else if (Game_Stage == 2)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//	}
+	//	else if (Game_Stage == 3)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//	}
+	//	else if (Game_Stage == 4)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//		Stage4();
+	//	}
+	//	else if (Game_Stage == 5)
+	//	{
+	//		Lager_Interval = 100;
+	//		Arrow1_Interval = 15.f;
+	//		Arrow1_Speed = 5.5f;
+	//		Stage4_Interval = 350.f;
+
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//		Stage4();
+	//	}
+
+	//	fcount++;
+	//	fcount2++;
+	//	fcount3++;
+	//	fcount4++;
+	//}
 }
 
 void CMainGame::Render()
@@ -139,29 +149,34 @@ void CMainGame::Render()
 		NULL_CHECK(m_pTexInfo);
 
 		GET_INSTANCE(CGraphic_Device)->Render_Begin();
+		if (GET_INSTANCE(CSocketMgr)->Get_SocketType() != CSocketMgr::LOGIN)
+		{
+			float fCenterX = m_pTexInfo->tImgInfo.Width * 0.5f;
+			float fCenterY = m_pTexInfo->tImgInfo.Height * 0.5f;
 
-		float fCenterX = m_pTexInfo->tImgInfo.Width * 0.5f;
-		float fCenterY = m_pTexInfo->tImgInfo.Height * 0.5f;
+			D3DXMATRIX matScale, matTrans, matWorld;
+			D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+			D3DXMatrixTranslation(&matTrans, 500.f, 500.f, 0.f);
 
-		D3DXMATRIX matScale, matTrans, matWorld;
-		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
-		D3DXMatrixTranslation(&matTrans, 500.f, 500.f, 0.f);
+			matWorld = matScale * matTrans;
 
-		matWorld = matScale * matTrans;
-
-		GET_INSTANCE(CGraphic_Device)->GetSprite()->SetTransform(&matWorld);
-		GET_INSTANCE(CGraphic_Device)->GetSprite()->Draw(m_pTexInfo->pTexture, nullptr,
-			&D3DXVECTOR3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_INSTANCE(CGraphic_Device)->GetSprite()->SetTransform(&matWorld);
+			GET_INSTANCE(CGraphic_Device)->GetSprite()->Draw(m_pTexInfo->pTexture, nullptr,
+				&D3DXVECTOR3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
-
+		}
 		CObjMgr::GetInstance()->Render(m_hDC);
 
-		Time_Render(0.f,0.f);
+		//Time_Render(0.f,0.f);
 
-		Game_Over();
+		//Game_Over();
 		GET_INSTANCE(CGraphic_Device)->Render_End();
 	}
+
+	if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
+		return;
+
 }
 
 void CMainGame::Release()
@@ -401,7 +416,7 @@ void CMainGame::Time_Render(float x,float y)
 
 void CMainGame::Game_Over()
 {
-	if (dynamic_cast<CPlayer*>(CObjMgr::GetInstance()->GetPlayer())->Get_Game_Over()==true)
+	/*if (dynamic_cast<CPlayer*>(CObjMgr::GetInstance()->GetPlayer())->Get_Game_Over()==true)
 	{
 		m_Game_Over = true;
 		m_pScoreImage = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"GameOver");
@@ -423,7 +438,7 @@ void CMainGame::Game_Over()
 
 
 		Time_Render(-310.f, 515.f);
-	}
+	}*/
 }
 
 

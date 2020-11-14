@@ -1,3 +1,2 @@
-﻿  stdafx.cpp
-C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\Client\ObjMgr.h(22,13): error C3646: 'sock': 알 수 없는 재정의 지정자입니다.
-C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\Client\ObjMgr.h(22,13): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+﻿  Enemy.cpp
+  Client.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\죽림고수 최종+Bgm\Debug\Client.exe

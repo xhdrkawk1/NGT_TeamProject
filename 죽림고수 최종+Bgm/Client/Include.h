@@ -10,3 +10,4 @@
 #include "AbstractMgr.h"
 #include "ObjMgr.h"
 #include "KeyMgr.h"
+#include "SocketMgr.h"

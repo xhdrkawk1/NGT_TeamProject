@@ -20,7 +20,8 @@ void CObjMgr::AddObject(CObj * pObj, OBJ_ID eID)
 
 void CObjMgr::Update()
 {
-	for (int i = PLAYER; i < END; i++)
+
+	for (int i = LOGO; i < END; i++)
 	{
 		for (OBJITER iter = m_ObjLst[i].begin(); iter != m_ObjLst[i].end();)
 		{
@@ -38,24 +39,24 @@ void CObjMgr::Update()
 				++iter;
 		}
 	}
-	if (m_ObjLst[LAGER].size() >= 1)
-	{
-		CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW]);
-		CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW2]);
+	//if (m_ObjLst[LAGER].size() >= 1)
+	//{
+	//	CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW]);
+	//	CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW2]);
 
 
-		//플레이어 사망모드
-		CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[LAGER]);
+	//	//플레이어 사망모드
+	//	CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[LAGER]);
 
-	}
+	//}
 
 	//////플레이어 무적 모드
 	//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW]);
 	//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW2]);
 
 	//플레이어 사망모드
-	CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW]);
-	CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW2]);
+	//CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW]);
+	//CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW2]);
 }
 
 void CObjMgr::Render(HDC hDC)

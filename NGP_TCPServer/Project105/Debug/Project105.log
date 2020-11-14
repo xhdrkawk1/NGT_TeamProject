@@ -1,3 +1,2 @@
-﻿  소스.cpp
-C:\Users\user\Desktop\NGT_TeamProject\NGP_TCPServer\Project105\소스.cpp(110,67): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  Project105.vcxproj -> C:\Users\user\Desktop\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe
+﻿  DataMgr.cpp
+  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe

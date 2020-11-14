@@ -152,6 +152,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Graphic_Device.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Include.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Lager.h" />
+    <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="Obj.h" />
@@ -166,6 +168,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTexture.h" />
+    <ClInclude Include="SocketMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
@@ -178,16 +181,19 @@
     <ClCompile Include="Arrow2.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Graphic_Device.cpp" />
     <ClCompile Include="HoldBack.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Lager.cpp" />
+    <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SingleTexture.cpp" />
+    <ClCompile Include="SocketMgr.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

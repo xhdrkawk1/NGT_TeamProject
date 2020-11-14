@@ -40,3 +40,10 @@ ClassName* ClassName::m_pInstance = nullptr;
 
 #define GET_INSTANCE(CLASSNAME)	\
 	CLASSNAME::GetInstance()
+
+typedef struct tagLoginData
+{
+	bool LoginSuccess;
+	char strName[100];
+
+}LOGINDATA;
