@@ -201,6 +201,7 @@ HRESULT CMainGame::Init_Graphic_Device()
 
 void CMainGame::Stage1()
 {
+	//서버에서는 위치갱신  클라이언트에서는 위치에 렌더만
 	if (fcount >= Arrow1_Interval)
 	{
 			int random = rand() % 1000;
