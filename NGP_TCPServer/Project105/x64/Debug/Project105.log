@@ -1,0 +1,5 @@
+﻿  DataMgr.cpp
+C:\Users\user\Desktop\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(27,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+  소스.cpp
+C:\Users\user\Desktop\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(27,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+  코드를 생성하고 있습니다...

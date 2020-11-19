@@ -43,5 +43,7 @@ public:
 
 
 	CRITICAL_SECTION   m_Crt;
+
+	float m_fServerTime = 0.f;
 };
 

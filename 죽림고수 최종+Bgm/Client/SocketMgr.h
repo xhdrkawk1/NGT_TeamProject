@@ -22,6 +22,7 @@ public:
 private:
 	
 	SocketType m_eType;
-
+public:
+	float m_fTempServerTime = 0.f;
 };
 

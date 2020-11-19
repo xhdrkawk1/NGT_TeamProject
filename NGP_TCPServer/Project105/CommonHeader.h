@@ -22,13 +22,18 @@ using namespace std;
 
 //manager
 #include "DataMgr.h"
+#include "TimeMgr.h"
+#include "KeyMgr.h"
 //Direct X9
 #include <d3d9.h>
 #include <d3dx9.h>
 #pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "d3d9.lib")
 
+// User Header
 #include "define.h"
+#include "Constant.h"
+
 typedef struct tagInfo
 {
 	D3DXVECTOR3 vPos;  // À§Ä¡º¤ÅÍ

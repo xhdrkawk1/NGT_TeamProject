@@ -50,6 +50,11 @@ void CDataMgr::InitDataMgr()
 
 void CDataMgr::UpdatePreData()
 {
+    CTimeMgr::GetInstance()->UpdateTime();
+    CKeyMgr::GetInstance()->KeyCheck();
+
+    m_fServerTime += CTimeMgr::GetInstance()->GetDeltaTime();
+    cout << m_fServerTime << endl;
 }
 
 
@@ -102,6 +107,8 @@ HRESULT CDataMgr::Update(int iPlayerNum)
     case CDataMgr::LOBBY:
         if (FAILED(LobbyUpdate(iPlayerNum)))
             return E_FAIL;
+
+        m_fServerTime = 0.f;
         break;
     case CDataMgr::INGAME:
         if (FAILED(IngameUpdate(iPlayerNum)))
@@ -249,6 +256,7 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
       
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
 
+    send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
 
 
 

@@ -146,12 +146,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataMgr.cpp" />
+    <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constant.h" />
     <ClInclude Include="DataMgr.h" />
     <ClInclude Include="CommonHeader.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

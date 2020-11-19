@@ -195,6 +195,7 @@ HRESULT CSocketMgr::UpdateIngame()
 {
 
 	float vEnemyPos[2];
+	
 	float vMyPos[2];
 	int retval;
 	D3DXVECTOR3 vec3= GET_INSTANCE(CObjMgr)->GetPlayer()->Get_Info().vPos;;
@@ -206,6 +207,7 @@ HRESULT CSocketMgr::UpdateIngame()
 	while (1)
 	{
 		retval = recvn(m_Socket, (char*)&vEnemyPos, sizeof(float)*2.f, 0, m_serveraddr);
+		retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");
 			break;
@@ -217,8 +219,7 @@ HRESULT CSocketMgr::UpdateIngame()
 	}
 
 	GET_INSTANCE(CObjMgr)->GetObjList(CObjMgr::ENEMY).front()->Set_Pos(vEnemyPos[0], vEnemyPos[1]);
-
-
+	
 	return S_OK;
 }
 

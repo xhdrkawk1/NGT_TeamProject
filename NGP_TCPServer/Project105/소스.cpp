@@ -8,8 +8,15 @@ DWORD WINAPI ClientThread(LPVOID arg);
 
 int main(int argc, char* argv[])
 {
+
+    /*__________________________________________________________________________________________________________
+   [ Ready Manager ]
+    ____________________________________________________________________________________________________________*/
+
     CDataMgr::GetInstance()->InitDataMgr();
     
+    CKeyMgr::GetInstance();
+
     int retval = 0;
     /*__________________________________________________________________________________________________________
    [ Ready WSA ]
@@ -97,7 +104,7 @@ int main(int argc, char* argv[])
     }
 
 
-
+    
 
     // CloseSocket.
     closesocket(pListenSocket);

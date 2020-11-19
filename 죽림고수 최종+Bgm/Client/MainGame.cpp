@@ -67,77 +67,79 @@ void CMainGame::Update()
 {
 	
 
-
+	if(CObjMgr::GetInstance()->GetObjList(CObjMgr::PLAYER).size()<1)
+		return;
 	CObjMgr::GetInstance()->Update();
 
 
-	//if (m_Game_Over == false)
-	//{
-	//	CObjMgr::GetInstance()->Update();
+	if (m_Game_Over == false)
+	{
+		CObjMgr::GetInstance()->Update();
 
-	//	if (GetTickCount() - MainGame_Time > 0 && GetTickCount() - MainGame_Time <= 10000)
-	//	{
-	//		Game_Stage = 1;
+		Time = CSocketMgr::GetInstance()->m_fTempServerTime;
+		if (Time > 0 && Time <= 10)
+		{
+			Game_Stage = 1;
 
-	//	}
-	//	else if (GetTickCount() - MainGame_Time > 10000 && GetTickCount() - MainGame_Time <= 20000)
-	//	{
-	//		Game_Stage = 2;
-	//	}
-	//	else if (GetTickCount() - MainGame_Time > 20000 && GetTickCount() - MainGame_Time <= 30000)
-	//	{
-	//		Game_Stage = 3;
-	//	}
-	//	else if (GetTickCount() - MainGame_Time > 30000 && GetTickCount() - MainGame_Time <= 45000)
-	//	{
-	//		Game_Stage = 4;
+		}
+		else if (Time > 10 && Time <= 20)
+		{
+			Game_Stage = 2;
+		}
+		else if (Time > 20 && Time <= 30)
+		{
+			Game_Stage = 3;
+		}
+		else if (Time > 30 && Time <= 45)
+		{
+			Game_Stage = 4;
 
-	//	}
-	//	else if (GetTickCount() - MainGame_Time > 45000 && GetTickCount() - MainGame_Time <= 60000)
-	//	{
-	//		Game_Stage = 5;
-	//	}
-	//	//Game_Stage = 5; 난이도 테스트
-	//	if (Game_Stage == 1)
-	//	{
-	//		Stage1();
-	//	}
-	//	else if (Game_Stage == 2)
-	//	{
-	//		Stage1();
-	//		Stage2();
-	//	}
-	//	else if (Game_Stage == 3)
-	//	{
-	//		Stage1();
-	//		Stage2();
-	//		Stage3();
-	//	}
-	//	else if (Game_Stage == 4)
-	//	{
-	//		Stage1();
-	//		Stage2();
-	//		Stage3();
-	//		Stage4();
-	//	}
-	//	else if (Game_Stage == 5)
-	//	{
-	//		Lager_Interval = 100;
-	//		Arrow1_Interval = 15.f;
-	//		Arrow1_Speed = 5.5f;
-	//		Stage4_Interval = 350.f;
+		}
+		else if (Time > 45 && Time <= 60)
+		{
+			Game_Stage = 5;
+		}
+		//Game_Stage = 5; 난이도 테스트
+		if (Game_Stage == 1)
+		{
+			Stage1();
+		}
+		else if (Game_Stage == 2)
+		{
+			Stage1();
+			Stage2();
+		}
+		else if (Game_Stage == 3)
+		{
+			Stage1();
+			Stage2();
+			Stage3();
+		}
+		else if (Game_Stage == 4)
+		{
+			Stage1();
+			Stage2();
+			Stage3();
+			Stage4();
+		}
+		else if (Game_Stage == 5)
+		{
+			Lager_Interval = 100;
+			Arrow1_Interval = 15.f;
+			Arrow1_Speed = 5.5f;
+			Stage4_Interval = 350.f;
 
-	//		Stage1();
-	//		Stage2();
-	//		Stage3();
-	//		Stage4();
-	//	}
+			Stage1();
+			Stage2();
+			Stage3();
+			Stage4();
+		}
 
-	//	fcount++;
-	//	fcount2++;
-	//	fcount3++;
-	//	fcount4++;
-	//}
+		fcount++;
+		fcount2++;
+		fcount3++;
+		fcount4++;
+	}
 }
 
 void CMainGame::Render()
@@ -168,7 +170,7 @@ void CMainGame::Render()
 		}
 		CObjMgr::GetInstance()->Render(m_hDC);
 
-		//Time_Render(0.f,0.f);
+		Time_Render(0.f,0.f);
 
 		//Game_Over();
 		GET_INSTANCE(CGraphic_Device)->Render_End();
@@ -355,14 +357,14 @@ void CMainGame::Time_Render(float x,float y)
 	NULL_CHECK(m_pTexInfo);
 
 
-	int TimerTenSec = (GetTickCount() - MainGame_Time) / 10000;
+	int TimerTenSec = Time / 10;
 	int TenSecindex = TimerTenSec;
 
 	if ((TenSecindex / 10)>0)
 	{
 		TenSecindex -= (TenSecindex / 10) * 10;
 	}
-	int TimerSec = (GetTickCount() - MainGame_Time) / 1000;
+	int TimerSec = int(Time) % 10;
 	int Secindex = TimerSec;
 
 	if ((Secindex / 10)>0)
@@ -370,14 +372,14 @@ void CMainGame::Time_Render(float x,float y)
 		Secindex -= (Secindex / 10) * 10;
 	}
 
-	int TimerMliSec = (GetTickCount() - MainGame_Time) / 100;
+	int TimerMliSec = int(Time *10)%100;
 
 	int MilSecindex = TimerMliSec;
 	if ((MilSecindex / 10)>0)
 	{
 		MilSecindex -= (MilSecindex / 10)*10;
 	}
-	int TimerMicreSec = (GetTickCount() - MainGame_Time) / 10;
+	int TimerMicreSec = int(Time * 100) % 1000;
 
 	int MicroSecindex = TimerMicreSec;
 	if ((MicroSecindex / 10)>0)

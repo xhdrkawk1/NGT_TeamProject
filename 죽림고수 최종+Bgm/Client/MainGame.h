@@ -42,5 +42,6 @@ public:
 
 	bool m_Game_Over = false;
 
+	float Time = 0;//Temp;
 };
 
