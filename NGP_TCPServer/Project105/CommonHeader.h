@@ -5,7 +5,6 @@
 
 
 using namespace std;
-#define SERVERPORT 9000
 #include <locale>
 #include <stdlib.h>
 #include <malloc.h>

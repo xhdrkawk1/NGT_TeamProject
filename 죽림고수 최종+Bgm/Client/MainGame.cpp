@@ -51,12 +51,12 @@ void CMainGame::Initialize()
 	//CObj *pObj = CAbstractFactory<CHoldBack>::CreateObj();
 	//CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::HOLEBACK);
 
-	//Arrow1_Interval=40.f;
-	//Arrow1_Speed = 3.f;
-	//Arrow2_Interval=100.f;
-	//Arrow2_Speed = 2.f;
-	//Lager_Interval = 200.f;
-	//Stage4_Interval = 500.f;
+	Arrow1_Interval=40.f;
+	Arrow1_Speed = 3.f;
+	Arrow2_Interval=100.f;
+	Arrow2_Speed = 2.f;
+	Lager_Interval = 200.f;
+	Stage4_Interval = 500.f;
 
 	if (FAILED(GET_INSTANCE(CSocketMgr)->InitSocketMgr()))
 		return;
@@ -71,10 +71,9 @@ void CMainGame::Update()
 		return;
 	CObjMgr::GetInstance()->Update();
 
-
 	if (m_Game_Over == false)
 	{
-		CObjMgr::GetInstance()->Update();
+		//CObjMgr::GetInstance()->Update();
 
 		Time = CSocketMgr::GetInstance()->m_fTempServerTime;
 		if (Time > 0 && Time <= 10)
@@ -144,6 +143,7 @@ void CMainGame::Update()
 
 void CMainGame::Render()
 {
+	
 
 	if (m_Game_Over == false)
 	{
@@ -419,7 +419,9 @@ void CMainGame::Time_Render(float x,float y)
 
 void CMainGame::Game_Over()
 {
-	/*if (dynamic_cast<CPlayer*>(CObjMgr::GetInstance()->GetPlayer())->Get_Game_Over()==true)
+	if (CObjMgr::GetInstance()->GetObjList(CObjMgr::PLAYER).size() < 1)
+		return;
+	if (dynamic_cast<CPlayer*>(CObjMgr::GetInstance()->GetPlayer())->Get_Game_Over()==true)
 	{
 		m_Game_Over = true;
 		m_pScoreImage = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"GameOver");
@@ -441,7 +443,7 @@ void CMainGame::Game_Over()
 
 
 		Time_Render(-310.f, 515.f);
-	}*/
+	}
 }
 
 
