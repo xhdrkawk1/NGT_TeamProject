@@ -25,6 +25,9 @@
     <Filter Include="Manager\KeyMgr">
       <UniqueIdentifier>{8b631453-3d71-4dc2-b96c-9eed63103e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\ObjectMgr">
+      <UniqueIdentifier>{d971f252-9a43-412a-8aea-962887995bd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="소스.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>Manager\TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectMgr.cpp">
+      <Filter>Manager\ObjectMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Constant.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMgr.h">
+      <Filter>Manager\ObjectMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

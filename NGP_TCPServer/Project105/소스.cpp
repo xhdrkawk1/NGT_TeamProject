@@ -66,7 +66,6 @@ int main(int argc, char* argv[])
     SOCKADDR_IN tClientAddr;
     ZeroMemory(&tClientAddr, sizeof(SOCKADDR_IN));
 
-    HANDLE hThread;
 
     /*__________________________________________________________________________________________________________
      [ Server MainLoop ]
@@ -91,12 +90,19 @@ int main(int argc, char* argv[])
             cout << "[TCP Server] Client Connect \t IP Address = " << inet_ntoa(tClientAddr.sin_addr)
                 << "\t Port Number = " << ntohs(tClientAddr.sin_port) << endl;
             cout << endl;
+         
+          
+
+            HANDLE hThread;
+            hThread = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
+                0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
+                ClientThread,            // 스레드 함수의 시작 주소.
+                (LPVOID)(CDataMgr::GetInstance()->m_iConnect_Player),   // 스레드 함수 전달 인자. //0번 플레이어,1번플레이어만 확인하면됨 소켓은 우리가 Vector에 들고잇음.
+                0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
+                NULL);
+            CloseHandle(hThread);//커널 인터페이스 가 2개를 자식 부모 두개를 다루고있기때문에 닫아야함.
             CDataMgr::GetInstance()->m_iConnect_Player++;
             CDataMgr::GetInstance()->m_ClientSocketList.push_back(pClientSocket);
-          /*  for (auto& vec : CDataMgr::GetInstance()->m_ClientSocketList)
-            {
-                cout << &vec << endl;
-            }*/
         }
 
         CDataMgr::GetInstance()->CreateThreadForClient();

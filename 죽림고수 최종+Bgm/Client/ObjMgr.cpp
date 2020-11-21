@@ -108,7 +108,7 @@ void CObjMgr::ClearServerRender()
 			}
 		});
 		m_ObjLst[OBJECT].clear();
-
+		
 	
 
 

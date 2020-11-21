@@ -1,6 +1,6 @@
 #include "CommonHeader.h"
 #include "DataMgr.h"
-
+#include "ObjectMgr.h"
 
 IMPLEMENT_SINGLETON(CDataMgr)
 
@@ -9,6 +9,7 @@ DWORD __stdcall ClientThread(LPVOID arg);
 
 CDataMgr::CDataMgr()
 {
+   
 }
 
 
@@ -46,12 +47,15 @@ void CDataMgr::InitDataMgr()
     InitializeCriticalSection(&m_Crt);
     m_eType[0] = LOGIN;
     m_eType[1] = LOGIN;
+    CObjectMgr::GetInstance()->Initialize();
 }
 
 void CDataMgr::UpdatePreData()
 {
     CTimeMgr::GetInstance()->UpdateTime();
     CKeyMgr::GetInstance()->KeyCheck();
+
+    CObjectMgr::GetInstance()->Update();
 
     m_fServerTime += CTimeMgr::GetInstance()->GetDeltaTime();
     cout << m_fServerTime << endl;
@@ -65,34 +69,8 @@ HRESULT CDataMgr::CreateThreadForClient()
 
     UpdatePreData();//여기서 전데이터 보내면 됨.
 
-    HANDLE hThread[2];
-    hThread[0] = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
-        0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
-        ClientThread,            // 스레드 함수의 시작 주소.
-        (LPVOID)0,   // 스레드 함수 전달 인자. //0번 플레이어,1번플레이어만 확인하면됨 소켓은 우리가 Vector에 들고잇음.
-        0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
-        NULL);
 
-     if (m_ClientSocketList.size() == 2)
-    {
-
-        hThread[1] = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
-            0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
-            ClientThread,            // 스레드 함수의 시작 주소.
-            (LPVOID)1,   // 스레드 함수 전달 인자. 
-            0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
-            NULL);                   // DWORD변수를 전달하면 스레드 ID가 저장됨. 필요 없다면 NULL.
-
-       
-
-    }
-    WaitForSingleObject(hThread[0], INFINITE);
-    CloseHandle(hThread[0]);//커널 인터페이스 가 2개를 자식 부모 두개를 다루고있기때문에 닫아야함.
-    if (m_ClientSocketList.size() == 2)
-    {
-        WaitForSingleObject(hThread[1], INFINITE);
-        CloseHandle(hThread[1]);
-    }
+   
     return S_OK;
 }
 
@@ -216,7 +194,31 @@ HRESULT CDataMgr::LobbyUpdate(int iPlayerNum)
         }
 
 
-        send(m_ClientSocketList[iPlayerNum], (char*)&bIsGameStart, sizeof(bool), 0);
+
+        SOCKET client_sock = m_ClientSocketList[iPlayerNum];
+        int retval;
+        float Pos[2];
+        SOCKADDR_IN clientaddr;
+        int addrlen;
+        addrlen = sizeof(clientaddr);
+        getpeername(client_sock, (SOCKADDR*)&clientaddr, &addrlen);
+        bool LoginSuccess = false;
+        while (1)
+        {
+
+            retval = recvn(client_sock, (char*)&Pos, sizeof(float) * 2, 0, clientaddr);
+            if (retval == SOCKET_ERROR) {
+                err_display("recv()");
+                break;
+            }
+            else if (retval == 0)
+                break;
+
+            memcpy(&m_tPlayerData[iPlayerNum].Pos, Pos, sizeof(float) * 2);//우리플레이어좌표
+            break;
+        }
+
+     send(m_ClientSocketList[iPlayerNum], (char*)&bIsGameStart, sizeof(bool), 0);
   
  
 
@@ -225,6 +227,14 @@ HRESULT CDataMgr::LobbyUpdate(int iPlayerNum)
 
 HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
 {
+    if (iPlayerNum == 0)
+    {
+        int i = 0;
+
+    }
+    else
+        int i = 1;
+
     SOCKET client_sock = m_ClientSocketList[iPlayerNum];
     int retval;
     float Pos[2];
@@ -255,11 +265,12 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
     }
       
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
-
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
+    int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_vector.size();
 
-
-
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for(auto &vec: CObjectMgr::GetInstance()->Straight_ArrowInformation_vector)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//각요소의 월드매트릭스
     return S_OK;
 }
 
@@ -271,10 +282,11 @@ HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
 DWORD __stdcall ClientThread(LPVOID arg)
 {
     int iPlayerId = (int)arg;
-   
-    if(FAILED(GET_INSTANCE(CDataMgr)->Update(iPlayerId)))
-        return E_FAIL;
-   
+    while (1)
+    {
+        if (FAILED(GET_INSTANCE(CDataMgr)->Update(iPlayerId)))
+            return E_FAIL;
+    }
     return S_OK;
 }
 

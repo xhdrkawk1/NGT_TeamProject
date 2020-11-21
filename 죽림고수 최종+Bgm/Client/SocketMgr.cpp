@@ -166,6 +166,12 @@ HRESULT CSocketMgr::UpdateLobby()
 	bool bIsTemp;
 	int retval;
 
+
+	float vMyPos[2];
+	D3DXVECTOR3 vec3 = GET_INSTANCE(CObjMgr)->GetPlayer()->Get_Info().vPos;;
+	memcpy(&vMyPos, &vec3, sizeof(float) * 2);
+	send(m_Socket, (char*)&vMyPos, sizeof(float) * 2, 0);
+
 	while (1)
 	{
 		retval = recvn(m_Socket, (char*)&bIsTemp, sizeof(bool), 0, m_serveraddr);
@@ -180,9 +186,6 @@ HRESULT CSocketMgr::UpdateLobby()
 		{
 			m_eType = INGAME;
 			cout << "GameStart" << endl;
-
-
-			break;
 		}
 		break;
 	}
@@ -197,12 +200,10 @@ HRESULT CSocketMgr::UpdateIngame()
 
 
 	float vEnemyPos[2];
-	
 	float vMyPos[2];
 	int retval;
 	D3DXVECTOR3 vec3= GET_INSTANCE(CObjMgr)->GetPlayer()->Get_Info().vPos;;
 	memcpy(&vMyPos, &vec3, sizeof(float) * 2);
-
 	send(m_Socket, (char*)&vMyPos, sizeof(float) * 2, 0);
 
 
@@ -210,6 +211,7 @@ HRESULT CSocketMgr::UpdateIngame()
 	{
 		retval = recvn(m_Socket, (char*)&vEnemyPos, sizeof(float)*2.f, 0, m_serveraddr);
 		retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
+
 		int iNormalArrowCount = 0;
 
 		retval = recvn(m_Socket, (char*)&iNormalArrowCount, sizeof(int), 0, m_serveraddr);
@@ -221,6 +223,19 @@ HRESULT CSocketMgr::UpdateIngame()
 		{
 			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
 			pObj = CAbstractFactory<CArrow2>::CreateObj(matWorld);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
+
+		int iGuideArrowCount = 0;
+		retval = recvn(m_Socket, (char*)&iGuideArrowCount, sizeof(int), 0, m_serveraddr);
+		CObj* pObj = nullptr;
+		D3DXMATRIX matWorld;
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+
+		for (int i = 0; i < iGuideArrowCount; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CArrow>::CreateObj(matWorld);
 			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
 		}
 
