@@ -20,6 +20,7 @@ public:
 
 	void Arrow1_Calculate();
 	void Arrow2_Calculate();
+	void Warning_Calculate();
 public:
 	float Arrow1_Interval;
 	float Arrow1_Speed;
@@ -30,9 +31,10 @@ public:
 
 	int Game_Stage = 0;
 
-	vector<OBJECT_ARROW*> Straight_ArrowInformation_vector;
-
-	vector<OBJECT_ARROW*> Guide_ArrowInformation_vector;
+	list<OBJECT_ARROW*> Straight_ArrowInformation_list;
+	list<OBJECT_ARROW*> Guide_ArrowInformation_list;
+	list<OBJECT_WARNING*> WarningX_Information_list;
+	list<OBJECT_WARNING*> WarningY_Information_list;
 	//vector<OBJECT_PACKET*> Arrow_vector; // vector  // size
 	//vector<OBJECT_PACKET*> Arrow2_vector;// vector //size
 	//vector<OBJECT_PACKET*> Warning_vector;

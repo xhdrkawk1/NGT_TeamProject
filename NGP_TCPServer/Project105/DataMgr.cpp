@@ -266,16 +266,28 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
       
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
-    int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_vector.size();
 
+    int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_list.size();
     send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
-    for(auto &vec: CObjectMgr::GetInstance()->Straight_ArrowInformation_vector)
-        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//각요소의 월드매트릭스
+    for(auto &vec: CObjectMgr::GetInstance()->Straight_ArrowInformation_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//화살 월드매트릭스
 
-    size = CObjectMgr::GetInstance()->Guide_ArrowInformation_vector.size();
+    size = CObjectMgr::GetInstance()->Guide_ArrowInformation_list.size();
     send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
-    for (auto& vec : CObjectMgr::GetInstance()->Guide_ArrowInformation_vector)
-        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//각요소의 월드매트릭스
+    for (auto& vec : CObjectMgr::GetInstance()->Guide_ArrowInformation_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//유도화살 월드매트릭스
+
+
+    size = CObjectMgr::GetInstance()->WarningX_Information_list.size();
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for (auto& vec : CObjectMgr::GetInstance()->WarningX_Information_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//워닝X 월드매트릭스
+
+    size = CObjectMgr::GetInstance()->WarningY_Information_list.size();
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for (auto& vec : CObjectMgr::GetInstance()->WarningY_Information_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//워닝Y 월드매트릭스
+
 
     return S_OK;
 }

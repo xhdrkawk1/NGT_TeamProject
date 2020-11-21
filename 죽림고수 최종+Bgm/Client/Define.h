@@ -9,7 +9,7 @@
 #define MIN_STR 64
 #define MID_STR 128
 #define MAX_STR 256
-#define SERVERIP "127.0.0.1"
+#define SERVERIP "10.254.2.82"
 
 #define NULL_CHECK(PTR) if(nullptr == (PTR)) return ;
 #define NULL_CHECK_RETURN(PTR, VAL) if(nullptr == (PTR)) return VAL;

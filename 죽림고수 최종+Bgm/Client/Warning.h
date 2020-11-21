@@ -19,5 +19,6 @@ private:
 	Warn_Dir m_Warn_Dir;
 	DWORD WarningTime;
 	float Angle;
+	bool m_bIsInit;
 };
 

@@ -53,14 +53,30 @@ struct OBJECT_ARROW
 
 	RECT tRect;
 	int Target;
-};
 
+	bool isDead=false;
+};
+struct OBJECT_WARNING
+{
+	D3DXMATRIX mat_World;
+
+	float DeltaTime=0.f;
+	bool isDead = false;
+};
 
 class CObj;
 typedef list<CObj*>			OBJLIST;
 typedef OBJLIST::iterator	OBJITER;
 
-
+template <typename T>
+void Safe_Delete(T& ptr)
+{
+	if (nullptr != ptr)
+	{
+		delete ptr;
+		ptr = nullptr;
+	}
+}
 //struct OBJECT_PACKET
 //{
 //	D3DXMATRIX mat_World;

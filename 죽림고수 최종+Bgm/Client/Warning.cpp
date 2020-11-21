@@ -3,6 +3,7 @@
 #include "Lager.h"
 
 CWarning::CWarning()
+	:m_bIsInit(false)
 {
 }
 
@@ -22,14 +23,7 @@ void CWarning::Initialize()
 int CWarning::Update()
 {
 
-	//if (m_Warn_Dir == WARNY)
-	//{
-	//	m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"WarningY");	
-	//}
-	//else if (m_Warn_Dir == WARNX)
-	//{
-	//	m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"WarningX");
-	//}
+	
 	//if (GetTickCount()-WarningTime>3000)
 	//{
 	//	
@@ -57,6 +51,18 @@ void CWarning::Render(HDC hDC)
 
 
 	//m_tInfo.mat_World = mat_Scale* mat_Translate; //SRT
+	if (!m_bIsInit)
+	{
+		if (m_Warn_Dir == WARNY)
+		{
+			m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"WarningY");
+		}
+		else if (m_Warn_Dir == WARNX)
+		{
+			m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"WarningX");
+		}
+		m_bIsInit = true;
+	}
 
 	float fCenterX = m_pTexInfo->tImgInfo.Width * 0.5f;
 	float fCenterY = m_pTexInfo->tImgInfo.Height * 0.5f;
