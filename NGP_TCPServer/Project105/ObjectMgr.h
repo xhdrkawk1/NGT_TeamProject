@@ -19,6 +19,7 @@ public:
 
 
 	void Arrow1_Calculate();
+	void Arrow2_Calculate();
 public:
 	float Arrow1_Interval;
 	float Arrow1_Speed;
@@ -31,6 +32,7 @@ public:
 
 	vector<OBJECT_ARROW*> Straight_ArrowInformation_vector;
 
+	vector<OBJECT_ARROW*> Guide_ArrowInformation_vector;
 	//vector<OBJECT_PACKET*> Arrow_vector; // vector  // size
 	//vector<OBJECT_PACKET*> Arrow2_vector;// vector //size
 	//vector<OBJECT_PACKET*> Warning_vector;
@@ -42,6 +44,7 @@ public:
 
 
 	int Target = 0;
+	int Target2 = 0;
 	D3DXVECTOR3 vStandard;
 	D3DXVECTOR3 Player_Pos[2];
 

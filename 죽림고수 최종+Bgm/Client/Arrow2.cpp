@@ -56,8 +56,11 @@ void CArrow2::LateInit()
 
 int CArrow2::Update()
 {
+
 	/*CObj::UpdateArrowRect();
 	m_tInfo.vPos.x += m_fspeed*m_tInfo.vDir.x;
+
+
 	m_tInfo.vPos.y += m_fspeed*m_tInfo.vDir.y;
 
 

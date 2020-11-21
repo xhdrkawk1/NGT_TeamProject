@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.25.28610:TargetPlatformVersion=10.0.18362.0:
 Debug|Win32|C:\Users\Huijun\Desktop\NGP_TEAM\NGT_TeamProject\죽림고수 최종+Bgm\|
+=======
+PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.27.29110:TargetPlatformVersion=10.0.18362.0:
+Debug|Win32|C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\|
+>>>>>>> 023d14e256b3b84a7f2434637f9c61a984e319fc
