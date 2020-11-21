@@ -1,6 +1,6 @@
 #include "CommonHeader.h"
 #include "DataMgr.h"
-
+#include "ObjectMgr.h"
 
 IMPLEMENT_SINGLETON(CDataMgr)
 
@@ -9,6 +9,7 @@ DWORD __stdcall ClientThread(LPVOID arg);
 
 CDataMgr::CDataMgr()
 {
+   
 }
 
 
@@ -46,12 +47,15 @@ void CDataMgr::InitDataMgr()
     InitializeCriticalSection(&m_Crt);
     m_eType[0] = LOGIN;
     m_eType[1] = LOGIN;
+    CObjectMgr::GetInstance()->Initialize();
 }
 
 void CDataMgr::UpdatePreData()
 {
     CTimeMgr::GetInstance()->UpdateTime();
     CKeyMgr::GetInstance()->KeyCheck();
+
+    CObjectMgr::GetInstance()->Update();
 
     m_fServerTime += CTimeMgr::GetInstance()->GetDeltaTime();
     cout << m_fServerTime << endl;
@@ -255,11 +259,12 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
     }
       
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
-
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
+    int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_vector.size();
 
-
-
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for(auto &vec: CObjectMgr::GetInstance()->Straight_ArrowInformation_vector)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//각요소의 월드매트릭스
     return S_OK;
 }
 

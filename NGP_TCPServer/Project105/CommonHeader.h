@@ -42,8 +42,27 @@ typedef struct tagInfo
 }INFO;
 
 
+struct OBJECT_ARROW
+{
+	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 Dir;
+	D3DXMATRIX mat_World;
+	D3DXMATRIX mat_Scale;
+	D3DXMATRIX mat_Rotation;
+	D3DXMATRIX mat_Trans;
+
+	RECT tRect;
+	int Target;
+};
+
+
 class CObj;
 typedef list<CObj*>			OBJLIST;
 typedef OBJLIST::iterator	OBJITER;
 
 
+//struct OBJECT_PACKET
+//{
+//	D3DXMATRIX mat_World;
+//
+//};
