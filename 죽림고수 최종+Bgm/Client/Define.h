@@ -46,6 +46,4 @@ typedef OBJLIST::iterator	OBJITER;
 
 
 #define SERVERPORT 9000
-//#define SERVERIP   "192.168.5.9"
-#define SERVERIP   "127.0.0.1"
 #define _WINSOCK_DEPRECATED_NO_WARNINGS

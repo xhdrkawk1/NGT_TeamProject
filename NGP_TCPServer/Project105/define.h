@@ -1,8 +1,7 @@
 #pragma once
 
 #define SERVERPORT 9000
-#define SERVERIP  "127.0.0.1"
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define SERVERIP   "127.0.0.1"#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 
 #define WINCX 1000
