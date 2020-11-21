@@ -238,6 +238,57 @@ void CObjectMgr::Stage3()
 
 void CObjectMgr::Stage4()
 {
+	Arrow1_Interval = 0.5f;
+	Arrow1_Speed = 300.f;
+	if (fcount4 >= Stage4_Interval)
+	{
+		fcount4 = 0.f;
+		for (int i = 0; i < 5; i++)
+		{
+			D3DXVECTOR3 Pos[8];
+			Pos[0] = { 400.f * i,0 ,0 };
+			Pos[1] = { 400.f * i,1000.f ,0 };
+			Pos[2] = { 0,400.f * i ,0 };
+			Pos[3] = { 1000.f,400.f * i,0 };
+			Pos[4] = { 400.f * i + 200.f ,0 ,0 };
+			Pos[5] = { 400.f * i + 200.f,1000.f ,0 };
+			Pos[6] = { 0,400.f * i + 200.f ,0 };
+			Pos[7] = { 1000.f,400.f * i + 200.f ,0 };
+		
+			for (int j = 0; j < 8; j++)
+			{
+				OBJECT_ARROW *ArrowInfo = new OBJECT_ARROW;
+				ArrowInfo->Pos = Pos[j];
+				ArrowInfo->Dir = Player_Pos[j / 4] - ArrowInfo->Pos;
+				D3DXVec3Normalize(&ArrowInfo->Dir, &ArrowInfo->Dir);   //크기를 정규화
+				D3DXMatrixTranslation(&ArrowInfo->mat_Trans, ArrowInfo->Pos.x, ArrowInfo->Pos.y, 0.f);  //점들을 좌표로
+				D3DXVECTOR3 vStandard2 = -ArrowInfo->Dir;
+				float cter = D3DXVec3Dot(&vStandard2, &vStandard); //cos cter  화살이 가지는 방향벡터와 -x축 방향벡터를 내적함 (라디안)
+				float Angle = acosf(cter);
+				D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, -(Angle));
+
+				if (ArrowInfo->Pos.y <= Player_Pos[j / 4].y)
+				{
+					D3DXMatrixScaling(&ArrowInfo->mat_Scale, 1.f, 1.f, 0.f);
+					D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, (Angle));
+				}
+				else
+				{
+					D3DXMatrixScaling(&ArrowInfo->mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배
+					D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, -(Angle));
+				}
+
+				ArrowInfo->mat_World = ArrowInfo->mat_Scale * ArrowInfo->mat_Rotation * ArrowInfo->mat_Trans; //SRT
+				ArrowInfo->Target = int(j / 4);
+				Straight_ArrowInformation_list.push_back(ArrowInfo);
+
+
+
+			}
+		}
+
+	}
+
 }
 
 void CObjectMgr::Arrow1_Calculate()//일직선
