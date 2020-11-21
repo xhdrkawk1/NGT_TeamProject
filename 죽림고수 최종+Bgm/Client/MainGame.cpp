@@ -70,80 +70,83 @@ void CMainGame::Update()
 	if(CObjMgr::GetInstance()->GetObjList(CObjMgr::PLAYER).size()<1)
 		return;
 	CObjMgr::GetInstance()->Update();
+	Time = CSocketMgr::GetInstance()->m_fTempServerTime;
 
-	if (m_Game_Over == false)
-	{
-		//CObjMgr::GetInstance()->Update();
+	//if (m_Game_Over == false)
+	//{
+	//	//CObjMgr::GetInstance()->Update();
 
-		Time = CSocketMgr::GetInstance()->m_fTempServerTime;
-		if (Time > 0 && Time <= 10)
-		{
-			Game_Stage = 1;
+	//	Time = CSocketMgr::GetInstance()->m_fTempServerTime;
+	//	if (Time > 0 && Time <= 10)
+	//	{
+	//		Game_Stage = 1;
 
-		}
-		else if (Time > 10 && Time <= 20)
-		{
-			Game_Stage = 2;
-		}
-		else if (Time > 20 && Time <= 30)
-		{
-			Game_Stage = 3;
-		}
-		else if (Time > 30 && Time <= 45)
-		{
-			Game_Stage = 4;
+	//	}
+	//	else if (Time > 10 && Time <= 20)
+	//	{
+	//		Game_Stage = 2;
+	//	}
+	//	else if (Time > 20 && Time <= 30)
+	//	{
+	//		Game_Stage = 3;
+	//	}
+	//	else if (Time > 30 && Time <= 45)
+	//	{
+	//		Game_Stage = 4;
 
-		}
-		else if (Time > 45 && Time <= 60)
-		{
-			Game_Stage = 5;
-		}
-		//Game_Stage = 5; 난이도 테스트
-		if (Game_Stage == 1)
-		{
-			Stage1();
-		}
-		else if (Game_Stage == 2)
-		{
-			Stage1();
-			Stage2();
-		}
-		else if (Game_Stage == 3)
-		{
-			Stage1();
-			Stage2();
-			Stage3();
-		}
-		else if (Game_Stage == 4)
-		{
-			Stage1();
-			Stage2();
-			Stage3();
-			Stage4();
-		}
-		else if (Game_Stage == 5)
-		{
-			Lager_Interval = 100;
-			Arrow1_Interval = 15.f;
-			Arrow1_Speed = 5.5f;
-			Stage4_Interval = 350.f;
+	//	}
+	//	else if (Time > 45 && Time <= 60)
+	//	{
+	//		Game_Stage = 5;
+	//	}
+	//	//Game_Stage = 5; 난이도 테스트
+	//	if (Game_Stage == 1)
+	//	{
+	//		Stage1();
+	//	}
+	//	else if (Game_Stage == 2)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//	}
+	//	else if (Game_Stage == 3)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//	}
+	//	else if (Game_Stage == 4)
+	//	{
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//		Stage4();
+	//	}
+	//	else if (Game_Stage == 5)
+	//	{
+	//		Lager_Interval = 100;
+	//		Arrow1_Interval = 15.f;
+	//		Arrow1_Speed = 5.5f;
+	//		Stage4_Interval = 350.f;
 
-			Stage1();
-			Stage2();
-			Stage3();
-			Stage4();
-		}
+	//		Stage1();
+	//		Stage2();
+	//		Stage3();
+	//		Stage4();
+	//	}
 
-		fcount++;
-		fcount2++;
-		fcount3++;
-		fcount4++;
-	}
+	//	fcount++;
+	//	fcount2++;
+	//	fcount3++;
+	//	fcount4++;
+	//}
 }
 
 void CMainGame::Render()
 {
 	
+	if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
+		return;
 
 	if (m_Game_Over == false)
 	{
@@ -176,8 +179,7 @@ void CMainGame::Render()
 		GET_INSTANCE(CGraphic_Device)->Render_End();
 	}
 
-	if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
-		return;
+	GET_INSTANCE(CObjMgr)->ClearServerRender();
 
 }
 
@@ -203,103 +205,103 @@ HRESULT CMainGame::Init_Graphic_Device()
 
 void CMainGame::Stage1()
 {
-	//서버에서는 위치갱신  클라이언트에서는 위치에 렌더만
-	if (fcount >= Arrow1_Interval)
-	{
-			int random = rand() % 1000;
-			CObj *pObj=nullptr;
-			int random2 = rand() % 4;
-			
-			switch (random2)
-			{
-			case 0:	pObj = CAbstractFactory<CArrow2>::CreateObj(random, 0);
-				break;
-			case 1:	pObj = CAbstractFactory<CArrow2>::CreateObj(random, 1000);
-				break;
-			case 2:	pObj = CAbstractFactory<CArrow2>::CreateObj(0, random);
-				break;
-			case 3:	pObj = CAbstractFactory<CArrow2>::CreateObj(1000, random);
-				break;
-			}
-		
-			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::ARROW2);
-			dynamic_cast<CArrow2*>(pObj)->LateInit();
-			pObj->Set_speed(Arrow1_Speed);
+	////서버에서는 위치갱신  클라이언트에서는 위치에 렌더만
+	//if (fcount >= Arrow1_Interval)
+	//{
+	//		int random = rand() % 1000;
+	//		CObj *pObj=nullptr;
+	//		int random2 = rand() % 4;
+	//		
+	//		switch (random2)
+	//		{
+	//		case 0:	pObj = CAbstractFactory<CArrow2>::CreateObj(random, 0);
+	//			break;
+	//		case 1:	pObj = CAbstractFactory<CArrow2>::CreateObj(random, 1000);
+	//			break;
+	//		case 2:	pObj = CAbstractFactory<CArrow2>::CreateObj(0, random);
+	//			break;
+	//		case 3:	pObj = CAbstractFactory<CArrow2>::CreateObj(1000, random);
+	//			break;
+	//		}
+	//	
+	//		CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::ARROW2);
+	//		dynamic_cast<CArrow2*>(pObj)->LateInit();
+	//		pObj->Set_speed(Arrow1_Speed);
 
-		fcount = 0.f;
-	}
+	//	fcount = 0.f;
+	//}
 }
 
 void CMainGame::Stage2()
 {
-	if (Game_Stage == 2)
-	{
-		Arrow1_Interval = 30.f;
-		Arrow1_Speed = 3.5f;
-	}
-	if (fcount2 >= Arrow2_Interval)
-	{
-		int random = rand() % 1000;
-		CObj *pObj = nullptr;
-		int random2 = rand() % 4;
+	//if (Game_Stage == 2)
+	//{
+	//	Arrow1_Interval = 30.f;
+	//	Arrow1_Speed = 3.5f;
+	//}
+	//if (fcount2 >= Arrow2_Interval)
+	//{
+	//	int random = rand() % 1000;
+	//	CObj *pObj = nullptr;
+	//	int random2 = rand() % 4;
 
-		switch (random2)
-		{
-		case 0:	pObj = CAbstractFactory<CArrow>::CreateObj(random, 0);
-			break;
-		case 1:	pObj = CAbstractFactory<CArrow>::CreateObj(random, 1000);
-			break;
-		case 2:	pObj = CAbstractFactory<CArrow>::CreateObj(0, random);
-			break;
-		case 3:	pObj = CAbstractFactory<CArrow>::CreateObj(1000, random);
-			break;
-		}
-		CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::ARROW);
-	
-		pObj->Set_speed(Arrow2_Speed);
-		fcount2 = 0.f;
-	}
+	//	switch (random2)
+	//	{
+	//	case 0:	pObj = CAbstractFactory<CArrow>::CreateObj(random, 0);
+	//		break;
+	//	case 1:	pObj = CAbstractFactory<CArrow>::CreateObj(random, 1000);
+	//		break;
+	//	case 2:	pObj = CAbstractFactory<CArrow>::CreateObj(0, random);
+	//		break;
+	//	case 3:	pObj = CAbstractFactory<CArrow>::CreateObj(1000, random);
+	//		break;
+	//	}
+	//	CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::ARROW);
+	//
+	//	pObj->Set_speed(Arrow2_Speed);
+	//	fcount2 = 0.f;
+	//}
 }
 void CMainGame::Stage3()
 {
-	if (Game_Stage == 3)
-	{
-		Arrow1_Interval = 25.f;
-		Arrow1_Speed = 4.f;
-	}
-	float random_cter = (float)(rand() % 314) / 100;
-	
-	if (fcount3 >= Lager_Interval)
-	{
-		int random = rand() % 5+1;
-		CObj *pObj = nullptr;
-
-		int random2 = rand() % 2;
-		int random3;
-		switch (random2)
-		{
-
-		case 0:
-			random3 = rand() % 2;
-			pObj = CAbstractFactory<CWarning>::CreateObj(500 + 350*cosf(random_cter)+50, 500 - 350 * sinf(random_cter));
-			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::Warn_Dir(random3));
-			break;
-		case 1:
-			random3 = rand() % 2;
-			pObj = CAbstractFactory<CWarning>::CreateObj(500 + 350 * cosf(random_cter)+50, 500 + 350 * sinf(random_cter));
-			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::Warn_Dir(random3));
-			break;
-
-
-		}
-		CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::WARNING);
-
-		fcount3 = 0.f;
-	}
+	//	if (Game_Stage == 3)
+	//	{
+	//		Arrow1_Interval = 25.f;
+	//		Arrow1_Speed = 4.f;
+	//	}
+	//	float random_cter = (float)(rand() % 314) / 100;
+	//	
+	//	if (fcount3 >= Lager_Interval)
+	//	{
+	//		int random = rand() % 5+1;
+	//		CObj *pObj = nullptr;
+	//
+	//		int random2 = rand() % 2;
+	//		int random3;
+	//		switch (random2)
+	//		{
+	//
+	//		case 0:
+	//			random3 = rand() % 2;
+	//			pObj = CAbstractFactory<CWarning>::CreateObj(500 + 350*cosf(random_cter)+50, 500 - 350 * sinf(random_cter));
+	//			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::Warn_Dir(random3));
+	//			break;
+	//		case 1:
+	//			random3 = rand() % 2;
+	//			pObj = CAbstractFactory<CWarning>::CreateObj(500 + 350 * cosf(random_cter)+50, 500 + 350 * sinf(random_cter));
+	//			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::Warn_Dir(random3));
+	//			break;
+	//
+	//
+	//		}
+	//		CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::WARNING);
+	//
+	//		fcount3 = 0.f;
+	//	}
 }
 void CMainGame::Stage4()
 {
-	if (Game_Stage == 4)
+	/*if (Game_Stage == 4)
 	{
 		Arrow1_Interval = 20.f;
 		Arrow1_Speed = 4.5f;
@@ -330,7 +332,7 @@ void CMainGame::Stage4()
 			pObj->Set_speed(Arrow1_Speed);
 		}
 		fcount4 = 0.f;
-	}
+	}*/
 }
 
 void CMainGame::Time_Render(float x,float y)

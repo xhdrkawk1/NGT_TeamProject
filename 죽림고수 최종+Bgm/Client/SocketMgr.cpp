@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "HoldBack.h"
 #include "Enemy.h"
+#include "Arrow.h"
+#include "Arrow2.h"
 IMPLEMENT_SINGLETON(CSocketMgr)
 SOCKET m_Socket;
 SOCKADDR_IN m_serveraddr;
@@ -179,8 +181,6 @@ HRESULT CSocketMgr::UpdateLobby()
 			m_eType = INGAME;
 			cout << "GameStart" << endl;
 
-			CObj* pobj = CAbstractFactory<CEnemy>::CreateObj(0.f,0.f);
-			CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::ENEMY);
 
 			break;
 		}
@@ -193,6 +193,8 @@ HRESULT CSocketMgr::UpdateLobby()
 
 HRESULT CSocketMgr::UpdateIngame()
 {
+
+
 
 	float vEnemyPos[2];
 	
@@ -208,6 +210,23 @@ HRESULT CSocketMgr::UpdateIngame()
 	{
 		retval = recvn(m_Socket, (char*)&vEnemyPos, sizeof(float)*2.f, 0, m_serveraddr);
 		retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
+		int iNormalArrowCount = 0;
+
+		retval = recvn(m_Socket, (char*)&iNormalArrowCount, sizeof(int), 0, m_serveraddr);
+		CObj* pObj = nullptr;
+		D3DXMATRIX matWorld;
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+
+		for (int i = 0; i < iNormalArrowCount; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CArrow2>::CreateObj(matWorld);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
+
+
+
+
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");
 			break;
@@ -217,8 +236,9 @@ HRESULT CSocketMgr::UpdateIngame()
 
 		break;
 	}
+	CObj* pobj = CAbstractFactory<CEnemy>::CreateObj(vEnemyPos[0], vEnemyPos[1]);
+	CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::OBJECT);
 
-	GET_INSTANCE(CObjMgr)->GetObjList(CObjMgr::ENEMY).front()->Set_Pos(vEnemyPos[0], vEnemyPos[1]);
 	
 	return S_OK;
 }

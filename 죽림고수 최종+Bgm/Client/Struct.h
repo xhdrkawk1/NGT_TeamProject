@@ -13,3 +13,8 @@ typedef struct tagTexture
 
 	D3DXIMAGE_INFO	   tImgInfo;
 }TEXINFO;
+typedef struct tagObjectInfo
+{
+
+	D3DXMATRIX mat_World;
+}OB_INFO;

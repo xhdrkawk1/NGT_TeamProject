@@ -88,7 +88,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			if (GetTickCount() - dwOldTime > 10)
+			if (GetTickCount() - dwOldTime > 5)
 			{
 				MainGame.Update();
 				MainGame.Render();

@@ -4,7 +4,7 @@ class CObjMgr
 {
 	DECLARE_SINGLETON(CObjMgr)
 public:
-	enum OBJ_ID {LOGO,PLAYER,ENEMY,ARROW,ARROW2,WARNING,LAGER,HOLEBACK,END };
+	enum OBJ_ID {LOGO,PLAYER,OBJECT,HOLEBACK,END };
 public:
 	CObjMgr();
 	~CObjMgr();
@@ -18,6 +18,7 @@ public:
 	void Render(HDC hDC);
 	void Release();
 	void ReleaseGroup(OBJ_ID eID);
+	void ClearServerRender();
 private:
 	OBJLIST	m_ObjLst[END];
 

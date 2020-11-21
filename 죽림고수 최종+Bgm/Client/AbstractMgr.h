@@ -21,5 +21,15 @@ public:
 		pObj->Set_Pos(x, y);
 		return pObj;
 	}
+	static CObj* CreateObj(D3DXMATRIX matWorld)
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+		pObj->Set_WorldMatrix(matWorld);
+		return pObj;
+
+
+
+	}
 };
 

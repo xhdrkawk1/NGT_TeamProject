@@ -39,27 +39,27 @@ void CObjMgr::Update()
 				++iter;
 		}
 	}
-	if (m_ObjLst[PLAYER].size() >= 1)
-	{
-		if (m_ObjLst[LAGER].size() >= 1)
-		{
-			CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW]);
-			CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW2]);
+	//if (m_ObjLst[PLAYER].size() >= 1)//충돌 주석
+	//{
+	//	if (m_ObjLst[LAGER].size() >= 1)
+	//	{
+	//		CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW]);
+	//		CCollisionMgr::CollisionRect(m_ObjLst[LAGER], m_ObjLst[ARROW2]);
 
 
-			//플레이어 사망모드
-			CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[LAGER]);
+	//		//플레이어 사망모드
+	//		CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[LAGER]);
 
-		}
+	//	}
 
-		////플레이어 무적 모드
-		//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW]);
-		//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW2]);
+	//	////플레이어 무적 모드
+	//	//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW]);
+	//	//CCollisionMgr::CollisionRect(m_ObjLst[PLAYER], m_ObjLst[ARROW2]);
 
-		////플레이어 사망모드
-		CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW]);
-		CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW2]);
-	}
+	//	////플레이어 사망모드
+	//	CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW]);
+	//	CCollisionMgr::Collision_TO_player(CObjMgr::GetInstance()->GetPlayer(), m_ObjLst[ARROW2]);
+	//}
 }
 
 void CObjMgr::Render(HDC hDC)
@@ -92,4 +92,25 @@ void CObjMgr::Release()
 
 void CObjMgr::ReleaseGroup(OBJ_ID eID)
 {
+}
+
+void CObjMgr::ClearServerRender()
+{
+
+	
+		for_each(m_ObjLst[OBJECT].begin(), m_ObjLst[OBJECT].end(),
+			[](auto& ptr)
+		{
+			if (ptr)
+			{
+				delete ptr;
+				ptr = nullptr;
+			}
+		});
+		m_ObjLst[OBJECT].clear();
+
+	
+
+
+
 }

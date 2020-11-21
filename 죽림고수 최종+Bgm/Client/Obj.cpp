@@ -33,3 +33,8 @@ void CObj::Set_Pos(float x,float y)
 	m_tInfo.vPos.y = y;
 	m_tInfo.vPos.z = 0.f;
 }
+void CObj::Set_WorldMatrix(D3DXMATRIX matWorld)
+{
+	m_tInfo.mat_World = matWorld;
+
+}

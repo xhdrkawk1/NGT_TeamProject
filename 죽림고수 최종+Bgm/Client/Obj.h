@@ -15,6 +15,7 @@ public:
 	void UpdateArrowRect();
 	void Set_Pos(float x, float y);
 	void Set_speed(float speed) { m_fspeed = speed; }
+	void Set_WorldMatrix(D3DXMATRIX matWorld);
 public:
 	INFO &Get_Info() { return m_tInfo; }
 	const RECT& GetRect() const { return m_tRect; }
