@@ -65,8 +65,8 @@ void CMainGame::Initialize()
 
 void CMainGame::Update()
 {
+	GET_INSTANCE(CTimeMgr)->UpdateTime();
 	
-
 	if(CObjMgr::GetInstance()->GetObjList(CObjMgr::PLAYER).size()<1)
 		return;
 	CObjMgr::GetInstance()->Update();
@@ -144,7 +144,7 @@ void CMainGame::Update()
 
 void CMainGame::Render()
 {
-	
+	GET_INSTANCE(CFrameMgr)->RenderFrame();
 	if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
 		return;
 

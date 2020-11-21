@@ -61,6 +61,12 @@
     <Filter Include="01.Object\04.Enemy">
       <UniqueIdentifier>{5e2b2811-de8e-4173-a747-ef607137c701}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Manager\06.TimeMgr">
+      <UniqueIdentifier>{392f360f-ef01-4a73-87a3-d3c6f185f447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\07.FrameMgr">
+      <UniqueIdentifier>{0d9bcbf7-ce41-4455-a188-2f15b17f67a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -148,6 +154,12 @@
     <ClInclude Include="Enemy.h">
       <Filter>01.Object\04.Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>98.Manager\06.TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameMgr.h">
+      <Filter>98.Manager\07.FrameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -210,6 +222,12 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>01.Object\04.Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>98.Manager\06.TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameMgr.cpp">
+      <Filter>98.Manager\07.FrameMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

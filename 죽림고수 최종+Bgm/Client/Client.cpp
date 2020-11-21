@@ -1,9 +1,10 @@
-zz// Client.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
+// Client.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
 #include "stdafx.h"
 #include "Client.h"
 #include "MainGame.h"
+#include "TimeMgr.h"
 #define MAX_LOADSTRING 100
 
 void err_quit(char* msg)
@@ -88,7 +89,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			if (GetTickCount() - dwOldTime > 5)
+			if (GET_INSTANCE(CFrameMgr)->LimitFrame())
 			{
 				MainGame.Update();
 				MainGame.Render();

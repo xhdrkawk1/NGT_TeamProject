@@ -1,0 +1,11 @@
+﻿  DataMgr.cpp
+  KeyMgr.cpp
+  ObjectMgr.cpp
+  TimeMgr.cpp
+  소스.cpp
+C:\Users\Huijun\Desktop\NGP_TEAM\NGT_TeamProject\NGP_TCPServer\Project105\소스.cpp(90,71): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  코드를 생성하고 있습니다.
+  Previous IPDB not found, fall back to full compilation.
+  All 210 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  코드를 생성했습니다.
+  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP_TEAM\NGT_TeamProject\NGP_TCPServer\Release\Project105.exe

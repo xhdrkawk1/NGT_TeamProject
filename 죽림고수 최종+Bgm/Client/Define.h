@@ -5,7 +5,7 @@
 #define DEAD_OBJ 1
 #define PI 3.141592
 
-
+#define MAX_FPS 60
 #define MIN_STR 64
 #define MID_STR 128
 #define MAX_STR 256
@@ -46,5 +46,5 @@ typedef OBJLIST::iterator	OBJITER;
 
 
 #define SERVERPORT 9000
-#define SERVERIP "127.0.0.1"
+
 #define _WINSOCK_DEPRECATED_NO_WARNINGS

@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Arrow.h"
 #include "Arrow2.h"
+#include "Warning.h"
 IMPLEMENT_SINGLETON(CSocketMgr)
 SOCKET m_Socket;
 SOCKADDR_IN m_serveraddr;
@@ -196,9 +197,6 @@ HRESULT CSocketMgr::UpdateLobby()
 
 HRESULT CSocketMgr::UpdateIngame()
 {
-
-
-
 	float vEnemyPos[2];
 	float vMyPos[2];
 	int retval;
@@ -213,12 +211,10 @@ HRESULT CSocketMgr::UpdateIngame()
 		retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
 
 		int iNormalArrowCount = 0;
-
 		retval = recvn(m_Socket, (char*)&iNormalArrowCount, sizeof(int), 0, m_serveraddr);
 		CObj* pObj = nullptr;
 		D3DXMATRIX matWorld;
 		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
-
 		for (int i = 0; i < iNormalArrowCount; ++i)
 		{
 			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
@@ -226,12 +222,10 @@ HRESULT CSocketMgr::UpdateIngame()
 			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
 		}
 
+
 		int iGuideArrowCount = 0;
 		retval = recvn(m_Socket, (char*)&iGuideArrowCount, sizeof(int), 0, m_serveraddr);
-		CObj* pObj = nullptr;
-		D3DXMATRIX matWorld;
 		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
-
 		for (int i = 0; i < iGuideArrowCount; ++i)
 		{
 			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
@@ -240,6 +234,28 @@ HRESULT CSocketMgr::UpdateIngame()
 		}
 
 
+		int iWarringX = 0;
+		retval = recvn(m_Socket, (char*)&iWarringX, sizeof(int), 0, m_serveraddr);
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+		for (int i = 0; i < iWarringX; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CWarning>::CreateObj(matWorld);
+			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::WARNX);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
+
+
+		int iWarringY = 0;
+		retval = recvn(m_Socket, (char*)&iWarringY, sizeof(int), 0, m_serveraddr);
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+		for (int i = 0; i < iWarringY; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CWarning>::CreateObj(matWorld);
+			dynamic_cast<CWarning*>(pObj)->Set_Dir(CWarning::WARNY);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
 
 
 		if (retval == SOCKET_ERROR) {
@@ -275,8 +291,6 @@ int recvn(SOCKET s, char* buf, int len, int flags, SOCKADDR_IN addr)
 			break;
 		left -= received;
 		ptr += received;
-		printf("[TCP/%s:%d] %f\n", inet_ntoa(addr.sin_addr),
-			ntohs(addr.sin_port), ((float(len - left) / (float)len)) * 100.f);
 	}
 
 	return (len - left);
