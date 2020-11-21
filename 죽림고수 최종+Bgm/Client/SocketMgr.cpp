@@ -228,8 +228,7 @@ HRESULT CSocketMgr::UpdateIngame()
 
 		int iGuideArrowCount = 0;
 		retval = recvn(m_Socket, (char*)&iGuideArrowCount, sizeof(int), 0, m_serveraddr);
-		CObj* pObj = nullptr;
-		D3DXMATRIX matWorld;
+
 		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
 
 		for (int i = 0; i < iGuideArrowCount; ++i)
