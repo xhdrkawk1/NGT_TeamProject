@@ -35,7 +35,7 @@ void CObjectMgr::Update()
 	D3DXMatrixScaling(&mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배
 
 	Arrow1_Calculate();
-
+	Arrow2_Calculate();
 	float Time = CDataMgr::GetInstance()->m_fServerTime;
 	if (Time > 0 && Time <= 10)
 		Game_Stage = 1;
@@ -94,7 +94,7 @@ void CObjectMgr::Update()
 void CObjectMgr::Stage1()
 {
 	int random = rand() % 1000;
-	OBJECT_ARROW* ArrowInfo = new OBJECT_ARROW;
+
 	int random2 = rand() % 4;
 
 	//OBJECT_ARROW는 초기에 방향, 위치, 크기를 잡아줘야함
@@ -102,6 +102,7 @@ void CObjectMgr::Stage1()
 	cout << "fcount ::"<<fcount << endl;
 	if (fcount >= Arrow1_Interval)
 	{
+		OBJECT_ARROW* ArrowInfo = new OBJECT_ARROW;
 		int random = rand() % 1000;
 		int random2 = rand() % 4;
 
@@ -149,13 +150,48 @@ void CObjectMgr::Stage1()
 		ArrowInfo->mat_World = ArrowInfo->mat_Scale * ArrowInfo->mat_Rotation * ArrowInfo->mat_Trans; //SRT
 		Straight_ArrowInformation_vector.push_back(ArrowInfo);
 		fcount = 0.f;
+		ArrowInfo->Target = Target;
+
+		Target++; //타겟이 1씩올라간다 생성할때마다
 	}
-	ArrowInfo->Target = Target;
-	Target++; //타겟이 1씩올라간다 생성할때마다
+
 }
 
 void CObjectMgr::Stage2()
 {
+	Arrow1_Interval = 1.5f;// 2초당 하나
+	Arrow1_Speed = 200.f; // 1초에 50이동
+
+	if (fcount2 >= Arrow2_Interval)
+	{
+		OBJECT_ARROW* ArrowInfo = new OBJECT_ARROW;
+		int random = rand() % 1000;
+		int random2 = rand() % 4;
+
+		D3DXVECTOR3 Position;
+		switch (random2)
+		{
+		case 0:
+			Position = { (float)random,0,0 };
+			break;
+		case 1:
+			Position = { (float)random, (float)1000,0 };
+			break;
+		case 2:
+			Position = { 0, (float)random,0 };
+			break;
+		case 3:
+			Position = { (float)1000, (float)random,0 };
+			break;
+		}
+		ArrowInfo->Pos = Position;
+
+		fcount2 = 0.f;
+		Guide_ArrowInformation_vector.push_back(ArrowInfo);
+		ArrowInfo->Target = Target;
+		Target++; //타겟이 1씩올라간다 생성할때마다
+	}
+	
 }
 
 void CObjectMgr::Stage3()
@@ -166,7 +202,7 @@ void CObjectMgr::Stage4()
 {
 }
 
-void CObjectMgr::Arrow1_Calculate()
+void CObjectMgr::Arrow1_Calculate()//일직선
 {
 	for (auto& ArrowInfo : Straight_ArrowInformation_vector)
 	{
@@ -178,6 +214,35 @@ void CObjectMgr::Arrow1_Calculate()
 		//OBJECT_PACKET* packet = new OBJECT_PACKET();
 		//packet->mat_World = ArrowInfo->mat_World;
 		//Arrow_vector.push_back(packet);
+	}
+}
+
+void CObjectMgr::Arrow2_Calculate()//유도
+{
+	for (auto& ArrowInfo : Guide_ArrowInformation_vector)
+	{
+		ArrowInfo->Dir = Player_Pos[ArrowInfo->Target] - ArrowInfo->Pos; // 플레이어에서 위치를빼서 플레이어를 향하는 방향
+		D3DXVec3Normalize(&ArrowInfo->Dir, &ArrowInfo->Dir);   //크기를 정규화
+		D3DXMatrixTranslation(&ArrowInfo->mat_Trans, ArrowInfo->Pos.x, ArrowInfo->Pos.y, 0.f);  //점들을 좌표로
+
+		D3DXVECTOR3 vStandard2 = -ArrowInfo->Dir;
+		float cter = D3DXVec3Dot(&vStandard2, &vStandard); //cos cter  화살이 가지는 방향벡터와 -x축 방향벡터를 내적함 (라디안)
+		float Angle = acosf(cter);
+		D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, -(Angle));
+
+		if (ArrowInfo->Pos.y <= Player_Pos[ArrowInfo->Target].y)
+		{
+			D3DXMatrixScaling(&ArrowInfo->mat_Scale, 1.f, 1.f, 0.f);
+			D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, (Angle));
+		}
+		else
+		{
+			D3DXMatrixScaling(&ArrowInfo->mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배
+			D3DXMatrixRotationZ(&ArrowInfo->mat_Rotation, -(Angle));
+		}
+
+		ArrowInfo->mat_World = ArrowInfo->mat_Scale * ArrowInfo->mat_Rotation * ArrowInfo->mat_Trans; //SRT
+
 	}
 }
 
