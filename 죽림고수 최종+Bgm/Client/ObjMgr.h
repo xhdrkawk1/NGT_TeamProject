@@ -4,7 +4,7 @@ class CObjMgr
 {
 	DECLARE_SINGLETON(CObjMgr)
 public:
-	enum OBJ_ID {LOGO,PLAYER,OBJECT,HOLEBACK,END };
+	enum OBJ_ID {LOGO,PLAYER,OBJECT,HOLEBACK,COUNTDOWN,END };
 public:
 	CObjMgr();
 	~CObjMgr();

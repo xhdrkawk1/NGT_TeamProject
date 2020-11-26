@@ -6,6 +6,7 @@
 #include "Arrow2.h"
 #include "Warning.h"
 #include "HoldBack.h"
+#include "CountDown.h"
 CMainGame::CMainGame()
 {
 	/*Game_Stage = 0;*/
@@ -43,13 +44,12 @@ void CMainGame::Initialize()
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/7.png", L"7");
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/8.png", L"8");
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/Time/9.png", L"9");
+
+	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_MULTI, L"../Texture/CountDown/%d.tga",L"CountDown",L"UI",3);
+
+
 	//Score
 	GET_INSTANCE(CTextureMgr)->InsertTexture(CTextureMgr::TEX_SINGLE, L"../Texture/UI/GameOver.png", L"GameOver");
-	//CObj *m_pPlayer = CAbstractFactory<CPlayer>::CreateObj();
-	//CObjMgr::GetInstance()->AddObject(m_pPlayer, CObjMgr::PLAYER);
-
-	//CObj *pObj = CAbstractFactory<CHoldBack>::CreateObj();
-	//CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::HOLEBACK);
 
 	Arrow1_Interval=40.f;
 	Arrow1_Speed = 3.f;
@@ -71,6 +71,8 @@ void CMainGame::Update()
 		return;
 	CObjMgr::GetInstance()->Update();
 	Time = CSocketMgr::GetInstance()->m_fTempServerTime;
+	if (GET_INSTANCE(CSocketMgr)->Get_SocketType() == CSocketMgr::COUNTDOWN)
+		Time = 0.f;
 
 	//if (m_Game_Over == false)
 	//{

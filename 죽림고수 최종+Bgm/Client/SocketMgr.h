@@ -3,7 +3,7 @@ class CSocketMgr
 {
 	DECLARE_SINGLETON(CSocketMgr)
 public:
-	enum SocketType{LOGIN,LOBBY,INGAME,FINAL};
+	enum SocketType{LOGIN,LOBBY,COUNTDOWN,INGAME,FINAL};
 public:
 	CSocketMgr();
 	~CSocketMgr();
@@ -14,10 +14,12 @@ public:
 	void err_quit(char* msg);
 	void err_display(char* msg);
 
+
 	HRESULT Update_SocketMgr();
 	HRESULT UpdateLogin();
 	HRESULT UpdateLobby();
 	HRESULT UpdateIngame();
+	HRESULT UpdateCountDown();
 	HRESULT UpdateFinal();
 private:
 	

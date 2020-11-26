@@ -9,6 +9,7 @@
 #include "Arrow2.h"
 #include "Warning.h"
 #include "Lager.h"
+#include "CountDown.h"
 IMPLEMENT_SINGLETON(CSocketMgr)
 SOCKET m_Socket;
 SOCKADDR_IN m_serveraddr;
@@ -89,9 +90,13 @@ HRESULT CSocketMgr::Update_SocketMgr()
 	case CSocketMgr::LOBBY:
 		UpdateLobby();
 		break;
+	case CSocketMgr::COUNTDOWN:
+		UpdateCountDown();
+		break;
 	case CSocketMgr::INGAME:
 		UpdateIngame();
 		break;
+
 	case CSocketMgr::FINAL:
 		UpdateFinal();
 		break;
@@ -186,8 +191,12 @@ HRESULT CSocketMgr::UpdateLobby()
 		bool LoginSuccess = (bool)bIsTemp;
 		if (LoginSuccess)
 		{
-			m_eType = INGAME;
+			m_eType = COUNTDOWN;
 			cout << "GameStart" << endl;
+
+			CObj* pObj = CAbstractFactory<CCountDown>::CreateObj();
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::COUNTDOWN);
+
 		}
 		break;
 	}
@@ -294,6 +303,37 @@ HRESULT CSocketMgr::UpdateIngame()
 	CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::OBJECT);
 
 	
+	return S_OK;
+}
+
+HRESULT CSocketMgr::UpdateCountDown()
+{
+
+	float vEnemyPos[2];
+	float vMyPos[2];
+	int retval;
+	D3DXVECTOR3 vec3 = GET_INSTANCE(CObjMgr)->GetPlayer()->Get_Info().vPos;;
+	memcpy(&vMyPos, &vec3, sizeof(float) * 2);
+	send(m_Socket, (char*)&vMyPos, sizeof(float) * 2, 0);
+
+	retval = recvn(m_Socket, (char*)&vEnemyPos, sizeof(float) * 2.f, 0, m_serveraddr);
+	retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
+
+	
+
+	CObj* pobj = CAbstractFactory<CEnemy>::CreateObj(vEnemyPos[0], vEnemyPos[1]);
+	CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::OBJECT);
+
+	if (CObjMgr::GetInstance()->GetObjList(CObjMgr::COUNTDOWN).size() != 0)
+		dynamic_cast<CCountDown*>(CObjMgr::GetInstance()->GetObjList(CObjMgr::COUNTDOWN).front())->SetTime(m_fTempServerTime);
+
+	if (m_fTempServerTime > 3.f)
+	{
+		m_eType = INGAME;
+		CObjMgr::GetInstance()->GetObjList(CObjMgr::COUNTDOWN).front()->IsDead();
+	}
+
+
 	return S_OK;
 }
 

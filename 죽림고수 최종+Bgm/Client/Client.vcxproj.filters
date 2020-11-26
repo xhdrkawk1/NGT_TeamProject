@@ -67,6 +67,9 @@
     <Filter Include="98.Manager\07.FrameMgr">
       <UniqueIdentifier>{0d9bcbf7-ce41-4455-a188-2f15b17f67a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\05.CountDown">
+      <UniqueIdentifier>{262aecbd-35c4-4406-b70f-ddffe987db29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -160,6 +163,9 @@
     <ClInclude Include="FrameMgr.h">
       <Filter>98.Manager\07.FrameMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>01.Object\05.CountDown</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -228,6 +234,9 @@
     </ClCompile>
     <ClCompile Include="FrameMgr.cpp">
       <Filter>98.Manager\07.FrameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDown.cpp">
+      <Filter>01.Object\05.CountDown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

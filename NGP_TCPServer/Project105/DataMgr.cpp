@@ -1,6 +1,8 @@
 #include "CommonHeader.h"
 #include "DataMgr.h"
 #include "ObjectMgr.h"
+#include <fstream>
+#include <algorithm>
 
 IMPLEMENT_SINGLETON(CDataMgr)
 
@@ -52,13 +54,61 @@ void CDataMgr::InitDataMgr()
 
 void CDataMgr::UpdatePreData()
 {
+
     CTimeMgr::GetInstance()->UpdateTime();
     CKeyMgr::GetInstance()->KeyCheck();
 
-    CObjectMgr::GetInstance()->Update();
+    if (m_eType[0] == INGAME && m_eType[1] == INGAME)
+        CObjectMgr::GetInstance()->Update();
+    else if (m_eType[0] == FINAL && m_eType[1] == FINAL)
+        SaveLoadScore();
+
 
     m_fServerTime += CTimeMgr::GetInstance()->GetDeltaTime();
-    cout << m_fServerTime << endl;
+    if (m_bIsClockReset)
+    {
+        m_bIsClockReset = false;
+        m_fServerTime = 0.f;
+    }
+
+}
+
+void CDataMgr::SaveLoadScore()
+{
+    ifstream fin("../HighScore/HighScore.txt");
+    SCOREINFO tTemp;
+    ZeroMemory(&tTemp, sizeof(SCOREINFO));
+    int iNum = 0;
+    while (!fin.eof || iNum > 5)
+    {
+        fin >> tTemp.Name;
+        fin >> tTemp.fScore;
+        m_vecScoreInfo.push_back(tTemp);
+        iNum++;
+    }
+
+    for (int i = 0; i < 2; ++i)
+    {
+        tTemp.fScore = m_tPlayerData[i].fLifeTime;
+        tTemp.Name = m_tPlayerData[i].strName;
+        m_vecScoreInfo.push_back(tTemp);
+    }
+
+    sort(m_vecScoreInfo.begin(), m_vecScoreInfo.end(), [](const SCOREINFO& lhs, const SCOREINFO& rhs)
+    {
+
+        return lhs.fScore < rhs.fScore;
+
+    });
+    fin.close();
+    ofstream fout("../HighScore/HighScore.txt");
+
+    for (auto& Info : m_vecScoreInfo)
+    {
+        fout << Info.fScore << " " << Info.Name << endl;
+    }
+    fout.close();
+
 }
 
 
@@ -66,8 +116,10 @@ void CDataMgr::UpdatePreData()
 HRESULT CDataMgr::CreateThreadForClient()
 {
 
-    if (!(m_eType[0] == INGAME && m_eType[1] == INGAME))
+    if (!((m_eType[0] == INGAME||m_eType[0] == COUNTDOWN) &&( m_eType[1] == INGAME|| m_eType[1] == COUNTDOWN)))
         return S_OK;
+
+
 
     UpdatePreData();//여기서 전데이터 보내면 됨.
 
@@ -131,8 +183,11 @@ HRESULT CDataMgr::Update(int iPlayerNum)
     case CDataMgr::LOBBY:
         if (FAILED(LobbyUpdate(iPlayerNum)))
             return E_FAIL;
-
         m_fServerTime = 0.f;
+        break;
+    case CDataMgr::COUNTDOWN:
+        if(FAILED(CountDownUpdate(iPlayerNum)))
+            return E_FAIL;
         break;
     case CDataMgr::INGAME:
         if (FAILED(IngameUpdate(iPlayerNum)))
@@ -233,10 +288,10 @@ HRESULT CDataMgr::LobbyUpdate(int iPlayerNum)
         iAnotherPlayer = 1;
 
   
-        if (m_eType[iAnotherPlayer] == INGAME || m_eType[iAnotherPlayer] == LOBBY)
+        if (m_eType[iAnotherPlayer] == COUNTDOWN || m_eType[iAnotherPlayer] == LOBBY)
         {
             bIsGameStart = true;
-            m_eType[iPlayerNum] = INGAME;
+            m_eType[iPlayerNum] = COUNTDOWN;
         }
 
 
@@ -271,12 +326,65 @@ HRESULT CDataMgr::LobbyUpdate(int iPlayerNum)
     return S_OK;
 }
 
-HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
+HRESULT CDataMgr::CountDownUpdate(int iPlayerNum)
 {
+    
+
     if (iPlayerNum == 0)
     {
         int i = 0;
+    }
+    else
+        int i = 1;
 
+    SOCKET client_sock = m_ClientSocketList[iPlayerNum];
+    int retval;
+    float Pos[2];
+    SOCKADDR_IN clientaddr;
+    int addrlen;
+    addrlen = sizeof(clientaddr);
+    getpeername(client_sock, (SOCKADDR*)&clientaddr, &addrlen);
+    bool LoginSuccess = false;
+
+    int iAnotherPlayer = 0;
+    if (iPlayerNum == 0)
+        iAnotherPlayer = 1;
+
+    while (1)
+    {
+
+        retval = recvn(client_sock, (char*)&Pos, sizeof(float) * 2, 0, clientaddr);
+        if (retval == SOCKET_ERROR) {
+            err_display("recv()");
+            break;
+        }
+        else if (retval == 0)
+            break;
+
+        memcpy(&m_tPlayerData[iPlayerNum].Pos, Pos, sizeof(float) * 2);//우리플레이어좌표
+
+        break;
+    }
+
+    send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
+    send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
+
+    if (m_fServerTime > 3.f || m_eType[iAnotherPlayer] == INGAME)
+    {
+        m_eType[iPlayerNum] = INGAME;
+        m_bIsClockReset = true;
+    }
+
+    return S_OK;
+}
+
+HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
+{
+ 
+
+    if (iPlayerNum == 0)
+    {
+        int i = 0;
     }
     else
         int i = 1;
@@ -306,10 +414,11 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
             break;
 
         memcpy(&m_tPlayerData[iPlayerNum].Pos, Pos, sizeof(float) * 2);//우리플레이어좌표
-
         break;
     }
       
+
+
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
 
@@ -352,6 +461,30 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
 
 HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
 {
+    
+    SOCKET client_sock = m_ClientSocketList[iPlayerNum];
+    int retval;
+    SOCKADDR_IN clientaddr;
+    int addrlen;
+    addrlen = sizeof(clientaddr);
+    getpeername(client_sock, (SOCKADDR*)&clientaddr, &addrlen);
+
+    int iAnotherPlayer = 0;
+    if (iPlayerNum == 0)
+        iAnotherPlayer = 1;
+
+    send(client_sock, (char*)&m_tPlayerData[iPlayerNum].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
+    send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
+
+    int iSize = m_vecScoreInfo.size();
+    send(client_sock, (char*)&iSize, sizeof(int), 0);
+    for (auto& pSrc : m_vecScoreInfo)
+    {
+        //send(client_sock,(char*)&pSrc,sizeof(SCOREINFO))
+    }
+
+
+
     return S_OK;
 }
 
