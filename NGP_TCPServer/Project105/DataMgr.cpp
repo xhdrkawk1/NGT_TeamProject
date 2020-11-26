@@ -293,6 +293,8 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
 
+
+
     int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_list.size();
     send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
     for(auto &vec: CObjectMgr::GetInstance()->Straight_ArrowInformation_list)

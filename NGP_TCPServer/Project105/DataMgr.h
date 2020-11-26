@@ -6,6 +6,7 @@ typedef struct  tagPlayerData
 	string strName = "";
 	bool   Alive = true;
 	float Pos[2] = { 0.f,0.f };
+	RECT tRect;
 }PLAYERDATA;
 
 

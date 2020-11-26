@@ -28,6 +28,9 @@
     <Filter Include="Manager\ObjectMgr">
       <UniqueIdentifier>{d971f252-9a43-412a-8aea-962887995bd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\CollisionMgr">
+      <UniqueIdentifier>{beff7f13-6655-47e9-abfa-57fb167e2cca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="소스.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="ObjectMgr.cpp">
       <Filter>Manager\ObjectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Manager\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="ObjectMgr.h">
       <Filter>Manager\ObjectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

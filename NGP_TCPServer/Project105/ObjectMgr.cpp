@@ -1,5 +1,5 @@
 #include "ObjectMgr.h"
-
+#include "CollisionMgr.h"
 IMPLEMENT_SINGLETON(CObjectMgr)
 
 CObjectMgr::CObjectMgr()
@@ -27,8 +27,17 @@ void CObjectMgr::Initialize()
 void CObjectMgr::Update()
 {
 
-	for(int i=0; i<2; i++)
-		Player_Pos[i] = { CDataMgr::GetInstance()->m_tPlayerData[i].Pos[0],CDataMgr::GetInstance()->m_tPlayerData[i].Pos[1],0.f };//매프레임 플레이어 1의 위치 갱신
+	for (int i = 0; i < 2; i++)
+	{
+		PLAYERDATA pdata = CDataMgr::GetInstance()->m_tPlayerData[i];
+		Player_Pos[i] = { pdata.Pos[0],pdata.Pos[1],0.f };//매프레임 플레이어 1의 위치 갱신
+		UpdateRect_Player(&pdata.tRect, Player_Pos[i]);
+		CCollisionMgr::CollisionRect( &pdata, Straight_ArrowInformation_list);
+		CCollisionMgr::CollisionRect(&pdata, Guide_ArrowInformation_list);//
+		CCollisionMgr::CollisionRect(&pdata, LagerX_list);
+		CCollisionMgr::CollisionRect(&pdata, LagerY_list);//
+	}
+
 	
 
 	D3DXMATRIX mat_Scale, mat_Rotation, mat_Translate;
@@ -38,6 +47,12 @@ void CObjectMgr::Update()
 	Arrow2_Calculate();
 	Warning_Calculate();
 	Lager_Calculate();
+
+	CCollisionMgr::CollisionRect(LagerX_list, Straight_ArrowInformation_list);
+	CCollisionMgr::CollisionRect(LagerX_list, Guide_ArrowInformation_list);
+	CCollisionMgr::CollisionRect(LagerY_list, Straight_ArrowInformation_list);
+	CCollisionMgr::CollisionRect(LagerY_list, Guide_ArrowInformation_list);
+
 	float Time = CDataMgr::GetInstance()->m_fServerTime;
 	if (Time > 0 && Time <= 10)
 		Game_Stage = 1;
@@ -302,6 +317,7 @@ void CObjectMgr::Arrow1_Calculate()//일직선
 
 	
 		ArrowInfo->Pos +=(  ArrowInfo->Dir * CTimeMgr::GetInstance()->GetDeltaTime() * Arrow1_Speed);
+		UpdateRect_Arrow(&ArrowInfo->tRect, ArrowInfo->Pos);
 		D3DXMatrixTranslation(&ArrowInfo->mat_Trans, ArrowInfo->Pos.x, ArrowInfo->Pos.y, 0.f);  //점들을 좌표로
 		ArrowInfo->mat_World = ArrowInfo->mat_Scale * ArrowInfo->mat_Rotation * ArrowInfo->mat_Trans; //SRT
 
@@ -350,6 +366,7 @@ void CObjectMgr::Arrow2_Calculate()//유도
 		}
 
 		ArrowInfo->Pos += (ArrowInfo->Dir * CTimeMgr::GetInstance()->GetDeltaTime() * Arrow2_Speed);
+		UpdateRect_Arrow(&ArrowInfo->tRect, ArrowInfo->Pos);
 		D3DXMatrixTranslation(&ArrowInfo->mat_Trans, ArrowInfo->Pos.x, ArrowInfo->Pos.y, 0.f);  //점들을 좌표로
 		ArrowInfo->mat_World = ArrowInfo->mat_Scale * ArrowInfo->mat_Rotation * ArrowInfo->mat_Trans; //SRT
 		
@@ -360,7 +377,7 @@ void CObjectMgr::Arrow2_Calculate()//유도
 		if (ArrowInfo->isDead == true)
 		{
 			Safe_Delete(*iterBegin);
-			iterBegin = Straight_ArrowInformation_list.erase(iterBegin);
+			iterBegin = Guide_ArrowInformation_list.erase(iterBegin);
 		}
 		else
 			iterBegin++;
@@ -453,11 +470,45 @@ void CObjectMgr::MakeLager(D3DXVECTOR3 POS, int Type)
 	if (Type == 0)
 	{
 		LagerX_list.push_back(Lager);
+		UpdateRect_RagerX(&Lager->tRect, POS);
 	}
 	else
 	{
 		LagerY_list.push_back(Lager);
+		UpdateRect_RagerY(&Lager->tRect, POS);
 	}
 
+}
+
+void CObjectMgr::UpdateRect_Player(RECT* Rect, D3DXVECTOR3 POS)
+{
+	Rect->left = LONG(POS.x - (35 * 0.5));
+	Rect->top = LONG(POS.y - (35 * 0.5));
+	Rect->right = LONG(POS.x + (35 * 0.5));
+	Rect->bottom = LONG(POS.y + (35 * 0.5));
+}
+
+void CObjectMgr::UpdateRect_Arrow(RECT* Rect,D3DXVECTOR3 POS)
+{
+	Rect->left = LONG(POS.x - (35* 0.5));
+	Rect->top =  LONG(POS.y - (35* 0.5));
+	Rect->right =LONG(POS.x + (35* 0.5));
+	Rect->bottom=LONG(POS.y + (35 *0.5));
+}
+
+void CObjectMgr::UpdateRect_RagerX(RECT* Rect, D3DXVECTOR3 POS)
+{
+	Rect->left = LONG(POS.x - (2000 * 0.5));
+	Rect->top = LONG(POS.y - (20 * 0.5));
+	Rect->right = LONG(POS.x + (2000 * 0.5));
+	Rect->bottom = LONG(POS.y + (20 * 0.5));
+}
+
+void CObjectMgr::UpdateRect_RagerY(RECT* Rect, D3DXVECTOR3 POS)
+{
+	Rect->left = LONG(POS.x - (20 * 0.5));
+	Rect->top = LONG(POS.y - (2000 * 0.5));
+	Rect->right = LONG(POS.x + (20 * 0.5));
+	Rect->bottom = LONG(POS.y + (2000 * 0.5));
 }
 

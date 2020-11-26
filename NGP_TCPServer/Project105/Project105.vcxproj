@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="DataMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="ObjectMgr.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Constant.h" />
     <ClInclude Include="DataMgr.h" />
     <ClInclude Include="CommonHeader.h" />
