@@ -26,6 +26,9 @@ public:
 	void	UpdatePreData();
 
 	HRESULT CreateThreadForClient();
+	HRESULT CreateThareadForLobby();
+
+
 	HRESULT Update(int iPlayerNum);
 	HRESULT LoginUpdate(int iPlayerNum);
 	HRESULT LobbyUpdate(int iPlayerNum);
