@@ -42,6 +42,7 @@ typedef struct tagInfo
 }INFO;
 
 
+
 struct OBJECT_ARROW
 {
 	D3DXVECTOR3 Pos;
@@ -60,6 +61,7 @@ struct OBJECT_WARNING
 {
 	D3DXMATRIX mat_World;
 
+	RECT tRect;
 	float DeltaTime=0.f;
 	bool isDead = false;
 };

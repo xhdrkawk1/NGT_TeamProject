@@ -21,7 +21,7 @@ void CLager::Initialize()
 int CLager::Update()
 {
 	
-	//CObj::UpdateRect();
+	CObj::UpdateRect();
 
 
 	//if (GetTickCount() - LagerTime>500)

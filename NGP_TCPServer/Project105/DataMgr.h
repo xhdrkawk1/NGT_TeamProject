@@ -7,6 +7,7 @@ typedef struct  tagPlayerData
 	bool   Alive = true;
 	float  fLifeTime = 0.f;
 	float Pos[2] = { 0.f,0.f };
+	RECT tRect;
 }PLAYERDATA;
 
 typedef struct tagHighScoreInfo

@@ -23,6 +23,12 @@ public:
 	void Warning_Calculate();
 	void Lager_Calculate();
 	void MakeLager(D3DXVECTOR3 POS,int Type);
+
+	void UpdateRect_Player(RECT* Rect, D3DXVECTOR3 POS);
+	void UpdateRect_Arrow(RECT* Rect, D3DXVECTOR3 POS);
+
+	void UpdateRect_RagerX(RECT* Rect, D3DXVECTOR3 POS);
+	void UpdateRect_RagerY(RECT* Rect, D3DXVECTOR3 POS);
 public:
 	float Arrow1_Interval;
 	float Arrow1_Speed;
