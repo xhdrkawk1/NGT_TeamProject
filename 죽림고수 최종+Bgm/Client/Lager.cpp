@@ -20,14 +20,7 @@ void CLager::Initialize()
 
 int CLager::Update()
 {
-	//if (m_LagerType == LagerX)
-	//{
-	//	m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"LagerX");
-	//}
-	//else if (m_LagerType == LagerY)
-	//{
-	//	m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"LagerY");
-	//}
+	
 	//CObj::UpdateRect();
 
 
@@ -40,7 +33,18 @@ int CLager::Update()
 
 void CLager::Render(HDC hDC)
 {
-
+	if (m_bisInit == false)
+	{
+		if (m_LagerType == LagerX)
+		{
+			m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"LagerX");
+		}
+		else if (m_LagerType == LagerY)
+		{
+			m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"LagerY");
+		}
+		m_bisInit = true;
+	}
 
 	//D3DXMATRIX mat_Scale, mat_Rotation, mat_Translate;
 	//D3DXMatrixScaling(&mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배

@@ -1,3 +1,6 @@
-﻿  SocketMgr.cpp
-C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\Client\SocketMgr.cpp(210,60): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  Lager.cpp
+  SocketMgr.cpp
+C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\Client\SocketMgr.cpp(211,60): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Warning.cpp
+  코드를 생성하고 있습니다...
   Client.vcxproj -> C:\Users\user\Desktop\NGT_TeamProject\죽림고수 최종+Bgm\Debug\Client.exe
