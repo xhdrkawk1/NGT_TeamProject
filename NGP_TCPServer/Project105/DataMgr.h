@@ -11,8 +11,9 @@ typedef struct  tagPlayerData
 
 class CDataMgr
 {
-	enum SocketType {LOGIN,LOBBY,INGAME,FINAL};
 	DECLARE_SINGLETON(CDataMgr)
+public:
+	enum SocketType {LOGIN,LOBBY,INGAME,FINAL};
 
 
 public:

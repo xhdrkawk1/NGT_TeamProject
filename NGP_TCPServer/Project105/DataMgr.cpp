@@ -70,7 +70,33 @@ HRESULT CDataMgr::CreateThreadForClient()
     UpdatePreData();//여기서 전데이터 보내면 됨.
 
 
-   
+    HANDLE hThread[2];
+    hThread[0] = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
+        0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
+        ClientThread,            // 스레드 함수의 시작 주소.
+         (LPVOID*)0,   // 스레드 함수 전달 인자. //0번 플레이어,1번플레이어만 확인하면됨 소켓은 우리가 Vector에 들고잇음.
+        0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
+        NULL);
+    if (m_iConnect_Player >=1)
+    {
+        hThread[1] = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
+            0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
+            ClientThread,            // 스레드 함수의 시작 주소.
+           (LPVOID*)1,   // 스레드 함수 전달 인자. //0번 플레이어,1번플레이어만 확인하면됨 소켓은 우리가 Vector에 들고잇음.
+            0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
+            NULL);
+
+    }
+
+    WaitForSingleObject(hThread[0], INFINITE);
+    CloseHandle(hThread[0]);
+
+    if (m_iConnect_Player >=1)
+    {
+        WaitForSingleObject(hThread[1], INFINITE);
+        CloseHandle(hThread[1]);//커널 인터페이스 가 2개를 자식 부모 두개를 다루고있기때문에 닫아야함.
+
+    }
     return S_OK;
 }
 
@@ -312,11 +338,11 @@ HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
 DWORD __stdcall ClientThread(LPVOID arg)
 {
     int iPlayerId = (int)arg;
-    while (1)
-    {
+   /* while (GET_INSTANCE(CDataMgr) -> m_eType[iPlayerId]==CDataMgr::LOBBY || GET_INSTANCE(CDataMgr)->m_eType[iPlayerId] == CDataMgr::LOGIN)
+    {*/
         if (FAILED(GET_INSTANCE(CDataMgr)->Update(iPlayerId)))
             return E_FAIL;
-    }
+  //  }
     return S_OK;
 }
 
