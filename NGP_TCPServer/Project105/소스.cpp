@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
           
 
             CDataMgr::GetInstance()->m_ClientSocketList.push_back(pClientSocket);
-            CDataMgr::GetInstance()->CreateThreadForClient();
+            CDataMgr::GetInstance()->CreateThareadForLobby();
             CDataMgr::GetInstance()->m_iConnect_Player++;
         }
         else

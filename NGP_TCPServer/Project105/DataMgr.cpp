@@ -5,7 +5,7 @@
 IMPLEMENT_SINGLETON(CDataMgr)
 
 DWORD __stdcall ClientThread(LPVOID arg);
-
+DWORD __stdcall ClientLoginThread(LPVOID arg);
 
 CDataMgr::CDataMgr()
 {
@@ -65,7 +65,9 @@ void CDataMgr::UpdatePreData()
 
 HRESULT CDataMgr::CreateThreadForClient()
 {
-   
+
+    if (!(m_eType[0] == INGAME && m_eType[1] == INGAME))
+        return S_OK;
 
     UpdatePreData();//여기서 전데이터 보내면 됨.
 
@@ -98,6 +100,24 @@ HRESULT CDataMgr::CreateThreadForClient()
 
     }
     return S_OK;
+}
+
+HRESULT CDataMgr::CreateThareadForLobby()
+{
+
+ 
+    HANDLE hThread;
+    hThread = CreateThread(NULL,                    // 핸들 상속과 보안 디스크립터 정보.
+        0,                       // 스레드에 할당되는 스택 크기. 기본 값은 1MB.
+        ClientLoginThread,            // 스레드 함수의 시작 주소.
+        (LPVOID*)m_iConnect_Player,   // 스레드 함수 전달 인자. //0번 플레이어,1번플레이어만 확인하면됨 소켓은 우리가 Vector에 들고잇음.
+        0,                       // 스레드 생성을 제어하는 값.  0 또는 CREATE_SUSPENDED
+        NULL);
+    CloseHandle(hThread);
+
+    return S_OK;
+
+
 }
 
 HRESULT CDataMgr::Update(int iPlayerNum)
@@ -340,15 +360,23 @@ HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
 DWORD __stdcall ClientThread(LPVOID arg)
 {
     int iPlayerId = (int)arg;
-   /* while (GET_INSTANCE(CDataMgr) -> m_eType[iPlayerId]==CDataMgr::LOBBY || GET_INSTANCE(CDataMgr)->m_eType[iPlayerId] == CDataMgr::LOGIN)
-    {*/
+
         if (FAILED(GET_INSTANCE(CDataMgr)->Update(iPlayerId)))
             return E_FAIL;
-  //  }
+
     return S_OK;
 }
 
-
+DWORD __stdcall ClientLoginThread(LPVOID arg)
+{
+    int iPlayerId = (int)arg;
+     while (GET_INSTANCE(CDataMgr) -> m_eType[iPlayerId]==CDataMgr::LOBBY || GET_INSTANCE(CDataMgr)->m_eType[iPlayerId] == CDataMgr::LOGIN)
+     {
+    if (FAILED(GET_INSTANCE(CDataMgr)->Update(iPlayerId)))
+        return E_FAIL;
+     }
+    return S_OK;
+}
 
 int CDataMgr::recvn(SOCKET s, char* buf, int len, int flags, SOCKADDR_IN addr)
 {
