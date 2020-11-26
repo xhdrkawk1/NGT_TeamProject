@@ -37,6 +37,7 @@ void CObjectMgr::Update()
 	Arrow1_Calculate();
 	Arrow2_Calculate();
 	Warning_Calculate();
+	Lager_Calculate();
 	float Time = CDataMgr::GetInstance()->m_fServerTime;
 	if (Time > 0 && Time <= 10)
 		Game_Stage = 1;
@@ -376,11 +377,13 @@ void CObjectMgr::Warning_Calculate()
 		OBJECT_WARNING* WarnInfo = (*iterBegin);
 		WarnInfo->DeltaTime += CTimeMgr::GetInstance()->GetDeltaTime();
 
-		cout << "!!!! :"<<WarnInfo->DeltaTime << endl;
 		if (WarnInfo->DeltaTime >=3.f)
 		{
-			Safe_Delete(*iterBegin);
+			D3DXVECTOR3 pos = { WarnInfo->mat_World._41, WarnInfo->mat_World._42, WarnInfo->mat_World._43 };
+			MakeLager(pos, 0);
+			Safe_Delete(*iterBegin);//레이저 X 생성
 			iterBegin = WarningX_Information_list.erase(iterBegin);
+
 		}
 		else
 			iterBegin++;
@@ -394,11 +397,67 @@ void CObjectMgr::Warning_Calculate()
 		WarnInfo->DeltaTime += CTimeMgr::GetInstance()->GetDeltaTime();
 		if (WarnInfo->DeltaTime >= 3.f)
 		{
-			Safe_Delete(*iterBegin);
+			D3DXVECTOR3 pos = { WarnInfo->mat_World._41, WarnInfo->mat_World._42, WarnInfo->mat_World._43 };
+			MakeLager(pos, 1);
+			Safe_Delete(*iterBegin);//레이저 Y 생성
 			iterBegin = WarningY_Information_list.erase(iterBegin);
 		}
 		else
 			iterBegin++;
 	}
+}
+
+void CObjectMgr::Lager_Calculate()
+{
+	list<OBJECT_WARNING*>::iterator iterBegin = LagerX_list.begin();
+	list<OBJECT_WARNING*>::iterator iterEnd = LagerX_list.end();
+
+	for (; iterBegin != iterEnd; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBegin);
+		WarnInfo->DeltaTime += CTimeMgr::GetInstance()->GetDeltaTime();
+
+		if (WarnInfo->DeltaTime >= 1.f)
+		{
+			Safe_Delete(*iterBegin);
+			iterBegin = LagerX_list.erase(iterBegin);
+		}
+		else
+			iterBegin++;
+	}
+	iterBegin = LagerY_list.begin();
+	iterEnd = LagerY_list.end();
+	for (; iterBegin != iterEnd; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBegin);
+		WarnInfo->DeltaTime += CTimeMgr::GetInstance()->GetDeltaTime();
+		if (WarnInfo->DeltaTime >= 1.f)
+		{
+			Safe_Delete(*iterBegin);//레이저 Y 생성
+			iterBegin = LagerY_list.erase(iterBegin);
+		}
+		else
+			iterBegin++;
+	}
+}
+
+void CObjectMgr::MakeLager(D3DXVECTOR3 POS, int Type)
+{
+	OBJECT_WARNING * Lager = new OBJECT_WARNING;
+
+	D3DXMATRIX mat_Scale, mat_Rotation, mat_Translate;
+	D3DXMatrixScaling(&mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배
+	D3DXMatrixTranslation(&mat_Translate, POS.x, POS.y, 0.f);  //점들을 좌표로
+	Lager->mat_World = mat_Scale * mat_Translate;
+	
+	if (Type == 0)
+	{
+		LagerX_list.push_back(Lager);
+	}
+	else
+	{
+		LagerY_list.push_back(Lager);
+	}
+
 }
 

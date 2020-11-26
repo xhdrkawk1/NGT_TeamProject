@@ -315,6 +315,18 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
         send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//워닝Y 월드매트릭스
 
 
+
+    size = CObjectMgr::GetInstance()->LagerX_list.size();
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for (auto& vec : CObjectMgr::GetInstance()->LagerX_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//레이저X 월드매트릭스
+
+    size = CObjectMgr::GetInstance()->LagerY_list.size();
+    send(client_sock, (char*)&size, sizeof(int), 0);//벡터의 사이즈
+    for (auto& vec : CObjectMgr::GetInstance()->LagerY_list)
+        send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//레이저Y 월드매트릭스
+
+
     return S_OK;
 }
 

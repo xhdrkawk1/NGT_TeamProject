@@ -8,6 +8,7 @@
 #include "Arrow.h"
 #include "Arrow2.h"
 #include "Warning.h"
+#include "Lager.h"
 IMPLEMENT_SINGLETON(CSocketMgr)
 SOCKET m_Socket;
 SOCKADDR_IN m_serveraddr;
@@ -258,6 +259,27 @@ HRESULT CSocketMgr::UpdateIngame()
 			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
 		}
 
+		int iLagerX = 0;
+		retval = recvn(m_Socket, (char*)&iLagerX, sizeof(int), 0, m_serveraddr);
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+		for (int i = 0; i < iLagerX; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CLager>::CreateObj(matWorld);
+			dynamic_cast<CLager*>(pObj)->Set_LagerType(CLager::LagerX);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
+
+		int iLagerY = 0;
+		retval = recvn(m_Socket, (char*)&iLagerY, sizeof(int), 0, m_serveraddr);
+		ZeroMemory(&matWorld, sizeof(D3DXMATRIX));
+		for (int i = 0; i < iLagerY; ++i)
+		{
+			retval = recvn(m_Socket, (char*)&matWorld, sizeof(D3DXMATRIX), 0, m_serveraddr);
+			pObj = CAbstractFactory<CLager>::CreateObj(matWorld);
+			dynamic_cast<CLager*>(pObj)->Set_LagerType(CLager::LagerY);
+			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::OBJECT);
+		}
 
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");

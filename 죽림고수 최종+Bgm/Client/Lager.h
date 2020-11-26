@@ -15,6 +15,7 @@ public:
 	void Set_LagerType(eLagerType type) { m_LagerType = type; }
 
 private:
+	bool m_bisInit = false;
 	DWORD LagerTime;
 	eLagerType m_LagerType;
 };
