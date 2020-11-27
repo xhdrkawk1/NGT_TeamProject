@@ -1,11 +1,2 @@
-<<<<<<< HEAD
-﻿  CollisionMgr.cpp
+﻿  ObjectMgr.cpp
   Project105.vcxproj -> C:\Users\user\Desktop\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe
-=======
-﻿  DataMgr.cpp
-  KeyMgr.cpp
-  ObjectMgr.cpp
-  TimeMgr.cpp
-  코드를 생성하고 있습니다...
-  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe
->>>>>>> f1781a1277c060a1c9886aea15aa67dbdc74f59a

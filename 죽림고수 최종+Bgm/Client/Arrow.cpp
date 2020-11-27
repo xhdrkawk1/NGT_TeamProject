@@ -32,7 +32,7 @@ void CArrow::Initialize()
 
 int CArrow::Update()
 {
-	//CObj::UpdateArrowRect();
+	
 	////m_tInfo.vDir = CObjMgr::GetInstance()->GetPlayer()->Get_Info().vPos -m_tInfo.vPos;  // 플레이어에서 화살좌표를 뺌 
 	////D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);   //크기를 1로 조정
 
@@ -68,6 +68,7 @@ int CArrow::Update()
 
 void CArrow::Render(HDC hDC)
 {
+	
 	//m_tInfo.vDir = CObjMgr::GetInstance()->GetPlayer()->Get_Info().vPos - m_tInfo.vPos;  // 플레이어에서 화살좌표를 뺌 
 	//D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);   //크기를 1로 조정
 

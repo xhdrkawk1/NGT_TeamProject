@@ -56,7 +56,7 @@ void CArrow2::LateInit()
 
 int CArrow2::Update()
 {
-
+	
 	/*CObj::UpdateArrowRect();
 	m_tInfo.vPos.x += m_fspeed*m_tInfo.vDir.x;
 
@@ -75,7 +75,7 @@ int CArrow2::Update()
 
 void CArrow2::Render(HDC hDC)
 {
-
+	CObj::UpdateArrowRect();
 
 	//D3DXMatrixTranslation(&mat_Translate, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);  //점들을 좌표로
 

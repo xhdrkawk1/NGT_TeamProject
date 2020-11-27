@@ -30,7 +30,7 @@ void CCollisionMgr::CollisionRect(PLAYERDATA* pdata, list<OBJECT_ARROW*>& srcLst
 		if (IntersectRect(&rc, &pdata->tRect, &pSrc->tRect))
 		{
 			pdata->Alive = false;//플레이어 사망
-			cout << "충돌" << endl;
+			//cout << "충돌" << endl;
 			pSrc->isDead = true;
 		}
 	}

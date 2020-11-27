@@ -79,7 +79,7 @@ void CDataMgr::SaveLoadScore()
     SCOREINFO tTemp;
     ZeroMemory(&tTemp, sizeof(SCOREINFO));
     int iNum = 0;
-    while (!fin.eof || iNum > 5)
+    while (!fin.eof() || iNum > 5)
     {
         fin >> tTemp.Name;
         fin >> tTemp.fScore;

@@ -2,7 +2,7 @@
 
 #define SERVERPORT 9000
 
-#define SERVERIP   "127.0.0.1"
+#define SERVERIP "10.254.2.82"
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 
