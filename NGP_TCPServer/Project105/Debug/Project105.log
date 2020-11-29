@@ -1,1 +1,3 @@
-﻿  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe
+﻿  DataMgr.cpp
+C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(474,9): warning C4101: 'retval' :참조되지 않은 지역 변수입니다.
+  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe

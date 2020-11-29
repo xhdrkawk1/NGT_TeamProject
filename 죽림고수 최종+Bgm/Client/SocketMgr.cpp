@@ -192,7 +192,7 @@ HRESULT CSocketMgr::UpdateLobby()
 		if (LoginSuccess)
 		{
 			m_eType = COUNTDOWN;
-			cout << "GameStart" << endl;
+
 
 			CObj* pObj = CAbstractFactory<CCountDown>::CreateObj();
 			CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::COUNTDOWN);
@@ -213,11 +213,14 @@ HRESULT CSocketMgr::UpdateIngame()
 	D3DXVECTOR3 vec3= GET_INSTANCE(CObjMgr)->GetPlayer()->Get_Info().vPos;;
 	memcpy(&vMyPos, &vec3, sizeof(float) * 2);
 	send(m_Socket, (char*)&vMyPos, sizeof(float) * 2, 0);
-
+	bool bIsPlayerAlive, bIsEnemyAlive = false;
 
 	while (1)
 	{
+		
+		retval = recvn(m_Socket, (char*)&bIsPlayerAlive, sizeof(bool), 0, m_serveraddr);
 		retval = recvn(m_Socket, (char*)&vEnemyPos, sizeof(float)*2.f, 0, m_serveraddr);
+		retval = recvn(m_Socket, (char*)&bIsEnemyAlive, sizeof(bool), 0, m_serveraddr);
 		retval = recvn(m_Socket, (char*)&m_fTempServerTime, sizeof(float), 0, m_serveraddr);
 
 		int iNormalArrowCount = 0;
@@ -299,10 +302,23 @@ HRESULT CSocketMgr::UpdateIngame()
 
 		break;
 	}
-	CObj* pobj = CAbstractFactory<CEnemy>::CreateObj(vEnemyPos[0], vEnemyPos[1]);
-	CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::OBJECT);
+	if (bIsEnemyAlive)
+	{
+		CObj* pobj = CAbstractFactory<CEnemy>::CreateObj(vEnemyPos[0], vEnemyPos[1]);
+		CObjMgr::GetInstance()->AddObject(pobj, CObjMgr::OBJECT);
+	}
 
-	
+	CObj* pPlayer = GET_INSTANCE(CObjMgr)->GetPlayer();
+	if (pPlayer == nullptr)
+		return S_OK;
+	if (bIsPlayerAlive)
+		dynamic_cast<CPlayer*>(pPlayer)->Set_AllPlayerDeadWait(false);
+	else
+		dynamic_cast<CPlayer*>(pPlayer)->Set_AllPlayerDeadWait(true);
+
+	if (bIsEnemyAlive == false && bIsPlayerAlive == false)
+		m_eType = FINAL;
+
 	return S_OK;
 }
 
@@ -339,6 +355,17 @@ HRESULT CSocketMgr::UpdateCountDown()
 
 HRESULT CSocketMgr::UpdateFinal()
 {
+	int retval;
+
+	float fAliveTime, fEnemyAliveTime;
+
+	retval = recvn(m_Socket, (char*)&fAliveTime, sizeof(float), 0, m_serveraddr);
+	retval = recvn(m_Socket, (char*)&fEnemyAliveTime, sizeof(float), 0, m_serveraddr);
+
+	cout << "생존시간 : " << fAliveTime << endl;
+	cout << "적생존시간: " << fEnemyAliveTime << endl;
+	system("pause");
+
 	return S_OK;
 }
 int recvn(SOCKET s, char* buf, int len, int flags, SOCKADDR_IN addr)

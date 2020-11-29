@@ -116,7 +116,7 @@ void CDataMgr::SaveLoadScore()
 HRESULT CDataMgr::CreateThreadForClient()
 {
 
-    if (!((m_eType[0] == INGAME||m_eType[0] == COUNTDOWN) &&( m_eType[1] == INGAME|| m_eType[1] == COUNTDOWN)))
+    if (!((m_eType[0] == INGAME||m_eType[0] == COUNTDOWN ||m_eType[0]==FINAL) &&( m_eType[1] == INGAME|| m_eType[1] == COUNTDOWN||m_eType[1] == FINAL)))
         return S_OK;
 
 
@@ -416,10 +416,14 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
         memcpy(&m_tPlayerData[iPlayerNum].Pos, Pos, sizeof(float) * 2);//우리플레이어좌표
         break;
     }
-      
+    EnterCriticalSection(&m_Crt);
+    GET_INSTANCE(CObjectMgr)->Player_Collsion(iPlayerNum);
+    LeaveCriticalSection(&m_Crt);
 
-
+    send(client_sock, (char*)&m_tPlayerData[iPlayerNum].Alive, sizeof(bool), 0);
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
+    send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Alive, sizeof(bool), 0);
+
     send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
 
 
@@ -457,7 +461,9 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
     for (auto& vec : CObjectMgr::GetInstance()->LagerY_list)
         send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//레이저Y 월드매트릭스
 
-
+    if (m_tPlayerData[iPlayerNum].Alive == false && m_tPlayerData[iAnotherPlayer].Alive == false)
+        m_eType[iPlayerNum] = FINAL;
+    
     return S_OK;
 }
 
@@ -478,15 +484,15 @@ HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
     send(client_sock, (char*)&m_tPlayerData[iPlayerNum].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
 
-    int iSize = m_vecScoreInfo.size();
-    send(client_sock, (char*)&iSize, sizeof(int), 0);
-    for (auto& pSrc : m_vecScoreInfo)
-    {
-        //send(client_sock,(char*)&pSrc,sizeof(SCOREINFO))
-    }
+    //int iSize = m_vecScoreInfo.size();
+    //send(client_sock, (char*)&iSize, sizeof(int), 0);
+    //for (auto& pSrc : m_vecScoreInfo)
+    //{
+    //    //send(client_sock,(char*)&pSrc,sizeof(SCOREINFO))
+    //}
 
-
-
+   // closesocket(m_ClientSocketList[iPlayerNum]);
+    
     return S_OK;
 }
 

@@ -15,6 +15,7 @@ public:
 	void Set_Game_Over() { m_Bis_Gameover = true; }
 	bool Get_Game_Over() { return m_Bis_Gameover; }
 	void KeyInput();
+	void Set_AllPlayerDeadWait(bool bIsTemp) { m_bIsWaitForAllDead = bIsTemp; }
 private:
 	TCHAR szBuf[32]=L"";
 	D3DXVECTOR3 m_player_spot[4];
@@ -22,6 +23,7 @@ private:
 	float cter;
 	float arcCos;
 
+	bool m_bIsWaitForAllDead = false;
 	bool m_Bis_Gameover;
 };
 

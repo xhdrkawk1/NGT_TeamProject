@@ -17,7 +17,7 @@ void CCollisionMgr::CollisionRect(PLAYERDATA* pdata, list<OBJECT_WARNING*>& srcL
 		if (IntersectRect(&rc, &pdata->tRect, &pSrc->tRect))
 		{
 			pdata->Alive = false;//플레이어 사망
-			cout << "충돌" << endl;
+			//cout << "충돌" << endl;
 		}
 	}
 }
@@ -27,9 +27,14 @@ void CCollisionMgr::CollisionRect(PLAYERDATA* pdata, list<OBJECT_ARROW*>& srcLst
 	RECT rc = {};
 	for (auto& pSrc : srcLst)
 	{
+		if (pSrc->isDead == true)
+			continue;
+		if (pdata->Alive == false)
+			continue;
 		if (IntersectRect(&rc, &pdata->tRect, &pSrc->tRect))
 		{
 			pdata->Alive = false;//플레이어 사망
+			pdata->fLifeTime = GET_INSTANCE(CDataMgr)->m_fServerTime;
 			//cout << "충돌" << endl;
 			pSrc->isDead = true;
 		}

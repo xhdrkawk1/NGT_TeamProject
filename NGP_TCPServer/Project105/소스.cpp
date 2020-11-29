@@ -106,6 +106,11 @@ int main(int argc, char* argv[])
     
 
     // CloseSocket.
+    for (int i = 0; i < CDataMgr::GetInstance()->m_ClientSocketList.size();++i)
+    {
+        closesocket(CDataMgr::GetInstance()->m_ClientSocketList[i]);
+    }
+
     closesocket(pListenSocket);
     WSACleanup();
     GET_INSTANCE(CDataMgr)->DestroyInstance();

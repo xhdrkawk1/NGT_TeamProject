@@ -27,18 +27,6 @@ void CObjectMgr::Initialize()
 void CObjectMgr::Update()
 {
 
-	for (int i = 0; i < 2; i++)
-	{
-		PLAYERDATA *pdata = &CDataMgr::GetInstance()->m_tPlayerData[i];
-		Player_Pos[i] = { pdata->Pos[0],pdata->Pos[1],0.f };//매프레임 플레이어 1의 위치 갱신
-		UpdateRect_Player(&pdata->tRect, Player_Pos[i]);
-		CCollisionMgr::CollisionRect( pdata, Straight_ArrowInformation_list);
-		CCollisionMgr::CollisionRect(pdata, Guide_ArrowInformation_list);//
-		CCollisionMgr::CollisionRect(pdata, LagerX_list);
-		CCollisionMgr::CollisionRect(pdata, LagerY_list);//
-	}
-
-	
 
 	D3DXMATRIX mat_Scale, mat_Rotation, mat_Translate;
 	D3DXMatrixScaling(&mat_Scale, 1.f, 1.f, 0.f);  //x축크기 3배 y축 1배
@@ -553,5 +541,18 @@ void CObjectMgr::UpdateRect_RagerY(RECT* Rect, D3DXVECTOR3 POS)
 	Rect->top = LONG(POS.y - (2000 * 0.5));
 	Rect->right = LONG(POS.x + (20 * 0.5));
 	Rect->bottom = LONG(POS.y + (2000 * 0.5));
+}
+
+void CObjectMgr::Player_Collsion(int iPlayerNum)
+{
+
+	PLAYERDATA* pdata = &CDataMgr::GetInstance()->m_tPlayerData[iPlayerNum];
+	Player_Pos[iPlayerNum] = { pdata->Pos[0],pdata->Pos[1],0.f };//매프레임 플레이어 1의 위치 갱신
+	UpdateRect_Player(&pdata->tRect, Player_Pos[iPlayerNum]);
+	CCollisionMgr::CollisionRect(pdata, Straight_ArrowInformation_list);
+	CCollisionMgr::CollisionRect(pdata, Guide_ArrowInformation_list);//
+	CCollisionMgr::CollisionRect(pdata, LagerX_list);
+	CCollisionMgr::CollisionRect(pdata, LagerY_list);//
+
 }
 
