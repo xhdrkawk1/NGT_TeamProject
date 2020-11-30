@@ -1,3 +1,9 @@
 ﻿  DataMgr.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(474,9): warning C4101: 'retval' :참조되지 않은 지역 변수입니다.
-  Project105.vcxproj -> C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(95,32): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(103,15): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(129,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(202,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(561,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : 'strcpy' 선언을 참조하십시오.
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\DataMgr.cpp(539,9): warning C4101: 'retval' :참조되지 않은 지역 변수입니다.
+  Project105.vcxproj -> C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Debug\Project105.exe

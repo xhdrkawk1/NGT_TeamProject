@@ -27,6 +27,8 @@ CSocketMgr::~CSocketMgr()
 HRESULT CSocketMgr::InitSocketMgr()
 {
 
+	
+
 	int retval;
 
 	WSADATA wsa;
@@ -47,10 +49,6 @@ HRESULT CSocketMgr::InitSocketMgr()
 
 	m_eType = LOGIN;
     
-	CObj* pObj = nullptr;
-	pObj = CAbstractFactory<CLogo>::CreateObj();
-	CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::LOGO);
-	
 
 	return S_OK;
 }
@@ -316,7 +314,9 @@ HRESULT CSocketMgr::UpdateIngame()
 	else
 		dynamic_cast<CPlayer*>(pPlayer)->Set_AllPlayerDeadWait(true);
 
-	if (bIsEnemyAlive == false && bIsPlayerAlive == false)
+	bool bIsGotoNextChapter = false;
+	retval = recvn(m_Socket, (char*)&bIsGotoNextChapter, sizeof(bool), 0, m_serveraddr);
+	if (bIsGotoNextChapter)
 		m_eType = FINAL;
 
 	return S_OK;
@@ -361,12 +361,57 @@ HRESULT CSocketMgr::UpdateFinal()
 
 	retval = recvn(m_Socket, (char*)&fAliveTime, sizeof(float), 0, m_serveraddr);
 	retval = recvn(m_Socket, (char*)&fEnemyAliveTime, sizeof(float), 0, m_serveraddr);
+	system("cls");
 
 	cout << "생존시간 : " << fAliveTime << endl;
 	cout << "적생존시간: " << fEnemyAliveTime << endl;
+
+
+	int iSize = 0;
+	retval = recvn(m_Socket, (char*)&iSize, sizeof(int), 0, m_serveraddr);
+
+
+	for (int i = 0; i < iSize; ++i)
+	{
+		int iCharSize = 0;
+		float fTime = 0.f;
+		string strName;
+
+		retval = recvn(m_Socket, (char*)&iCharSize, sizeof(int), 0, m_serveraddr);
+		char chName[100] = { 0, };
+		retval = recvn(m_Socket, (char*)&chName, sizeof(char)*iCharSize, 0, m_serveraddr);
+		retval = recvn(m_Socket, (char*)&fTime, sizeof(float), 0, m_serveraddr);
+		
+		cout << i+1 << "등의 닉네임은: " << chName << " 점수는: " << fTime << "입니다." << endl;
+
+
+		//delete[] chName;
+	}
+
+
+
+
 	system("pause");
 
+	exit(1);
+
+
+	
+
+
 	return S_OK;
+}
+void CSocketMgr::ResetClient()
+{
+	m_eType = LOGIN;
+
+	CObj* pObj = nullptr;
+	pObj = CAbstractFactory<CLogo>::CreateObj();
+	CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::LOGO);
+
+
+	CObjMgr::GetInstance()->GetPlayer()->IsDead();
+
 }
 int recvn(SOCKET s, char* buf, int len, int flags, SOCKADDR_IN addr)
 {

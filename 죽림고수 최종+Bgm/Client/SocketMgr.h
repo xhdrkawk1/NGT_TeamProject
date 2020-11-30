@@ -21,6 +21,8 @@ public:
 	HRESULT UpdateIngame();
 	HRESULT UpdateCountDown();
 	HRESULT UpdateFinal();
+
+	void ResetClient();
 private:
 	
 	SocketType m_eType;

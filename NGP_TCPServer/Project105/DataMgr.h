@@ -1,5 +1,7 @@
 #pragma once
+
 #include "define.h"
+
 
 typedef struct  tagPlayerData
 {
@@ -55,7 +57,7 @@ public:
 	int m_iConnect_Player = 0;
 	SocketType m_eType[2];
 
-	vector<SCOREINFO> m_vecScoreInfo;
+	vector<SCOREINFO*> m_vecScoreInfo;
 	vector<SOCKET> m_ClientSocketList;
 	PLAYERDATA   m_tPlayerData[2];
 
@@ -67,5 +69,7 @@ public:
 	float m_fServerTime = 0.f;
 
 	bool m_bIsClockReset = false;
+
+	bool m_iPlayerExit[2] = { 0, };
 };
 

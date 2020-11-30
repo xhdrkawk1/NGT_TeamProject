@@ -7,6 +7,7 @@
 #include "Warning.h"
 #include "HoldBack.h"
 #include "CountDown.h"
+#include "Logo.h"
 CMainGame::CMainGame()
 {
 	/*Game_Stage = 0;*/
@@ -60,6 +61,13 @@ void CMainGame::Initialize()
 
 	if (FAILED(GET_INSTANCE(CSocketMgr)->InitSocketMgr()))
 		return;
+
+
+	CObj* pObj = nullptr;
+	pObj = CAbstractFactory<CLogo>::CreateObj();
+	CObjMgr::GetInstance()->AddObject(pObj, CObjMgr::LOGO);
+
+
 
 }
 
@@ -147,9 +155,13 @@ void CMainGame::Update()
 void CMainGame::Render()
 {
 	GET_INSTANCE(CFrameMgr)->RenderFrame();
-	if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
-		return;
-
+	if (m_bIsInitRender)
+	{
+		if (FAILED(GET_INSTANCE(CSocketMgr)->Update_SocketMgr()))
+			return;
+	}
+	else
+		m_bIsInitRender = true;
 	if (m_Game_Over == false)
 	{
 		m_pTexInfo = GET_INSTANCE(CTextureMgr)->GetTexInfo(L"BackGround");

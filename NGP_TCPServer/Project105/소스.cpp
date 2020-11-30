@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
                 &iAddrLen);              // accept() 함수가 채워넣은 주소 정보의 크기.
             if (INVALID_SOCKET == pClientSocket)
             {
-               GET_INSTANCE(CDataMgr)-> err_display("accept()");
+                GET_INSTANCE(CDataMgr)->err_display("accept()");
                 break;
             }
 
@@ -90,15 +90,15 @@ int main(int argc, char* argv[])
             cout << "[TCP Server] Client Connect \t IP Address = " << inet_ntoa(tClientAddr.sin_addr)
                 << "\t Port Number = " << ntohs(tClientAddr.sin_port) << endl;
             cout << endl;
-         
-          
+
+
 
             CDataMgr::GetInstance()->m_ClientSocketList.push_back(pClientSocket);
             CDataMgr::GetInstance()->CreateThareadForLobby();
             CDataMgr::GetInstance()->m_iConnect_Player++;
         }
         else
-        CDataMgr::GetInstance()->CreateThreadForClient();
+            CDataMgr::GetInstance()->CreateThreadForClient();
     
     }
 

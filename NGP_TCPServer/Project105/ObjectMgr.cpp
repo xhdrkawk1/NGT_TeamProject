@@ -556,3 +556,87 @@ void CObjectMgr::Player_Collsion(int iPlayerNum)
 
 }
 
+void CObjectMgr::Clear_AllObject()
+{
+
+
+	list<OBJECT_WARNING*>::iterator iterBegin = LagerX_list.begin();
+	list<OBJECT_WARNING*>::iterator iterEnd = LagerX_list.end();
+
+	for (; iterBegin != iterEnd; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBegin);
+		Safe_Delete(*iterBegin);
+		iterBegin = LagerX_list.erase(iterBegin);
+
+	}
+	iterBegin = LagerY_list.begin();
+	iterEnd = LagerY_list.end();
+	for (; iterBegin != iterEnd; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBegin);
+		Safe_Delete(*iterBegin);
+		iterBegin = LagerY_list.erase(iterBegin);
+
+	}
+
+	LagerX_list.clear();
+	LagerY_list.clear();
+
+
+
+
+
+	list<OBJECT_WARNING*>::iterator iterBeginWarning = WarningX_Information_list.begin();
+	list<OBJECT_WARNING*>::iterator iterEndWarning = WarningX_Information_list.end();
+
+	for (; iterBeginWarning != iterEndWarning; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBeginWarning);
+		Safe_Delete(*iterBeginWarning);//饭捞历 X 积己
+		iterBeginWarning = WarningX_Information_list.erase(iterBeginWarning);
+	}
+	iterBeginWarning = WarningY_Information_list.begin();
+	iterEndWarning = WarningY_Information_list.end();
+
+	for (; iterBeginWarning != iterEndWarning; )
+	{
+		OBJECT_WARNING* WarnInfo = (*iterBeginWarning);
+		Safe_Delete(*iterBeginWarning);//饭捞历 X 积己
+		iterBeginWarning = WarningY_Information_list.erase(iterBeginWarning);
+	}
+
+
+	WarningX_Information_list.clear();
+	WarningY_Information_list.clear();
+
+
+
+	list<OBJECT_ARROW*>::iterator iterBeginArrow = Straight_ArrowInformation_list.begin();
+	list<OBJECT_ARROW*>::iterator iterEndAroow = Straight_ArrowInformation_list.end();
+	for (; iterBeginArrow != iterEndAroow; )
+	{
+		OBJECT_ARROW* ArrowInfo = (*iterBeginArrow);
+
+			Safe_Delete(*iterBeginArrow);
+			iterBeginArrow = Straight_ArrowInformation_list.erase(iterBeginArrow);
+
+	}
+	Straight_ArrowInformation_list.clear();
+
+
+
+	list<OBJECT_ARROW*>::iterator iterBeginGuide = Guide_ArrowInformation_list.begin();
+	list<OBJECT_ARROW*>::iterator iterEndGuide = Guide_ArrowInformation_list.end();
+	for (; iterBeginGuide != iterEndGuide; )
+	{
+		OBJECT_ARROW* ArrowInfo = (*iterBeginGuide);
+
+		Safe_Delete(*iterBeginGuide);
+		iterBeginGuide = Guide_ArrowInformation_list.erase(iterBeginGuide);
+	}
+
+	Guide_ArrowInformation_list.clear();
+
+}
+

@@ -29,8 +29,8 @@ public:
 
 	void UpdateRect_RagerX(RECT* Rect, D3DXVECTOR3 POS);
 	void UpdateRect_RagerY(RECT* Rect, D3DXVECTOR3 POS);
-
 	void Player_Collsion(int iPlayerNum);
+	void Clear_AllObject();
 public:
 	float Arrow1_Interval;
 	float Arrow1_Speed;

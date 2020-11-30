@@ -41,7 +41,7 @@ public:
 	float Stage4_Interval;
 
 	bool m_Game_Over = false;
-
+	bool m_bIsInitRender = false;
 	float Time = 0;//Temp;
 };
 

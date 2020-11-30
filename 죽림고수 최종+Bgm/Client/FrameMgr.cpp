@@ -43,7 +43,7 @@ void CFrameMgr::RenderFrame()
 	// 1ÃÊ Áö³µ´Ù.
 	if (1.f <= m_fTimeCount)
 	{
-		std::cout << "FPS:" << m_iFPS << std::endl;
+		//std::cout << "FPS:" << m_iFPS << std::endl;
 
 		m_iFPS = 0;
 		m_fTimeCount = 0.f;		

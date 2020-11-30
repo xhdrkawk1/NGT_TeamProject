@@ -1,11 +1,13 @@
-﻿  DataMgr.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+﻿  CollisionMgr.cpp
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+  DataMgr.cpp
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
   KeyMgr.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
   ObjectMgr.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
   TimeMgr.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
   소스.cpp
-C:\Users\Huijun\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+C:\Users\FFS\Desktop\NGP\NGT_TeamProject\NGP_TCPServer\Project105\CommonHeader.h(28,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
   코드를 생성하고 있습니다...

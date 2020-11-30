@@ -3,6 +3,10 @@
 #include "ObjectMgr.h"
 #include <fstream>
 #include <algorithm>
+#include <iterator>
+#include <string>
+#include "CollisionMgr.h"
+
 
 IMPLEMENT_SINGLETON(CDataMgr)
 
@@ -60,8 +64,8 @@ void CDataMgr::UpdatePreData()
 
     if (m_eType[0] == INGAME && m_eType[1] == INGAME)
         CObjectMgr::GetInstance()->Update();
-    else if (m_eType[0] == FINAL && m_eType[1] == FINAL)
-        SaveLoadScore();
+   /* else if (m_eType[0] == FINAL && m_eType[1] == FINAL)
+        SaveLoadScore();*/
 
 
     m_fServerTime += CTimeMgr::GetInstance()->GetDeltaTime();
@@ -75,40 +79,65 @@ void CDataMgr::UpdatePreData()
 
 void CDataMgr::SaveLoadScore()
 {
+  
     ifstream fin("../HighScore/HighScore.txt");
     SCOREINFO tTemp;
-    ZeroMemory(&tTemp, sizeof(SCOREINFO));
+   
     int iNum = 0;
-    while (!fin.eof() || iNum > 5)
+
+    vector<string> vecStr{ istream_iterator<string> {fin }, { } };
+  
+    int i = 0;
+    for (auto& Info : vecStr)
     {
-        fin >> tTemp.Name;
-        fin >> tTemp.fScore;
-        m_vecScoreInfo.push_back(tTemp);
-        iNum++;
+        
+        if(i==0)
+            tTemp.fScore = stoi(Info);
+        else if (i == 1)
+        {
+            tTemp.Name = Info;
+
+            SCOREINFO *Data=new SCOREINFO;
+            *Data = tTemp;
+            m_vecScoreInfo.push_back(Data);
+            i == 0;
+        }
+        i++;
     }
 
-    for (int i = 0; i < 2; ++i)
+   
+    for (int i = 0; i < 2; i++)
     {
-        tTemp.fScore = m_tPlayerData[i].fLifeTime;
-        tTemp.Name = m_tPlayerData[i].strName;
-        m_vecScoreInfo.push_back(tTemp);
-    }
-
-    sort(m_vecScoreInfo.begin(), m_vecScoreInfo.end(), [](const SCOREINFO& lhs, const SCOREINFO& rhs)
+		SCOREINFO* Data = new SCOREINFO;
+		Data->Name = m_tPlayerData[i].strName;
+		Data->fScore = m_tPlayerData[i].fLifeTime;
+		m_vecScoreInfo.push_back(Data);
+	}
+	sort(m_vecScoreInfo.begin(), m_vecScoreInfo.end(), [](const SCOREINFO* lhs, const SCOREINFO* rhs)
     {
 
-        return lhs.fScore < rhs.fScore;
+        return lhs->fScore < rhs->fScore;
 
     });
     fin.close();
-    ofstream fout("../HighScore/HighScore.txt");
 
-    for (auto& Info : m_vecScoreInfo)
+    ofstream fout("../HighScore/HighScore.txt",ios::trunc);
+
+
+
+
+    for (int i = 0 ;i < m_vecScoreInfo.size(); ++i)
     {
-        fout << Info.fScore << " " << Info.Name << endl;
+        if (i == 5)
+            break;
+        fout << m_vecScoreInfo[i]->fScore << " " << m_vecScoreInfo[i]->Name << endl;
+
     }
+
+ 
     fout.close();
 
+    //delete[] Data;
 }
 
 
@@ -116,7 +145,7 @@ void CDataMgr::SaveLoadScore()
 HRESULT CDataMgr::CreateThreadForClient()
 {
 
-    if (!((m_eType[0] == INGAME||m_eType[0] == COUNTDOWN ||m_eType[0]==FINAL) &&( m_eType[1] == INGAME|| m_eType[1] == COUNTDOWN||m_eType[1] == FINAL)))
+    if (!((m_eType[0] == INGAME||m_eType[0] == COUNTDOWN ||m_eType[0]==FINAL) && ( m_eType[1] == INGAME|| m_eType[1] == COUNTDOWN||m_eType[1] == FINAL)))
         return S_OK;
 
 
@@ -151,6 +180,39 @@ HRESULT CDataMgr::CreateThreadForClient()
         CloseHandle(hThread[1]);//커널 인터페이스 가 2개를 자식 부모 두개를 다루고있기때문에 닫아야함.
 
     }
+
+    if (m_iPlayerExit[0]  &&  m_iPlayerExit[1])
+    {
+        //초기데이터로 갱신
+        cout << " 접속종료" << endl;
+        m_eType[0] = LOGIN;
+        m_eType[1] = LOGIN;
+        m_iConnect_Player = 0;
+        m_bIsClockReset = false;
+        m_iPlayerExit[0] = false;
+        m_iPlayerExit[1] = false;
+        m_tPlayerData[0].Alive = true;
+        m_tPlayerData[1].Alive = true;
+        closesocket(m_ClientSocketList[0]);
+        closesocket(m_ClientSocketList[1]);
+        m_ClientSocketList.clear();
+        m_fServerTime = 0.f;
+        
+
+        for(int i=0; i<m_vecScoreInfo.size();++i)
+        Safe_Delete(m_vecScoreInfo[i]);
+
+        m_vecScoreInfo.clear();
+        m_vecScoreInfo.clear();
+   
+        CCollisionMgr::InitColinumber();
+
+        GET_INSTANCE(CObjectMgr)->Clear_AllObject();
+
+
+    }
+
+
     return S_OK;
 }
 
@@ -330,13 +392,6 @@ HRESULT CDataMgr::CountDownUpdate(int iPlayerNum)
 {
     
 
-    if (iPlayerNum == 0)
-    {
-        int i = 0;
-    }
-    else
-        int i = 1;
-
     SOCKET client_sock = m_ClientSocketList[iPlayerNum];
     int retval;
     float Pos[2];
@@ -382,12 +437,6 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
 {
  
 
-    if (iPlayerNum == 0)
-    {
-        int i = 0;
-    }
-    else
-        int i = 1;
 
     SOCKET client_sock = m_ClientSocketList[iPlayerNum];
     int retval;
@@ -417,15 +466,17 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
         break;
     }
     EnterCriticalSection(&m_Crt);
+
     GET_INSTANCE(CObjectMgr)->Player_Collsion(iPlayerNum);
-    LeaveCriticalSection(&m_Crt);
 
     send(client_sock, (char*)&m_tPlayerData[iPlayerNum].Alive, sizeof(bool), 0);
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Pos, sizeof(float) * 2, 0);//임시 적플레이어좌표
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].Alive, sizeof(bool), 0);
 
-    send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
+    LeaveCriticalSection(&m_Crt);
 
+
+    send(client_sock, (char*)&m_fServerTime, sizeof(float), 0);//서버타임
 
 
     int size = CObjectMgr::GetInstance()->Straight_ArrowInformation_list.size();
@@ -461,8 +512,19 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
     for (auto& vec : CObjectMgr::GetInstance()->LagerY_list)
         send(client_sock, (char*)&vec->mat_World, sizeof(D3DXMATRIX), 0);//레이저Y 월드매트릭스
 
-    if (m_tPlayerData[iPlayerNum].Alive == false && m_tPlayerData[iAnotherPlayer].Alive == false)
+    bool bIsGotoNextChapter = false;
+
+
+    if ((m_tPlayerData[iPlayerNum].Alive == false && m_tPlayerData[iAnotherPlayer].Alive == false)||m_eType[iAnotherPlayer]==FINAL)
+        bIsGotoNextChapter = true;
+    send(client_sock, (char*)&bIsGotoNextChapter, sizeof(bool), 0);//레이저Y 월드매트릭스
+
+
+    if (bIsGotoNextChapter)
         m_eType[iPlayerNum] = FINAL;
+
+
+
     
     return S_OK;
 }
@@ -470,6 +532,9 @@ HRESULT CDataMgr::IngameUpdate(int iPlayerNum)
 HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
 {
     
+    if (m_iPlayerExit[iPlayerNum])
+        return S_OK;
+
     SOCKET client_sock = m_ClientSocketList[iPlayerNum];
     int retval;
     SOCKADDR_IN clientaddr;
@@ -484,15 +549,26 @@ HRESULT CDataMgr::FinalUpdate(int iPlayerNum)
     send(client_sock, (char*)&m_tPlayerData[iPlayerNum].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
     send(client_sock, (char*)&m_tPlayerData[iAnotherPlayer].fLifeTime, sizeof(float), 0);//플레이어 시간 보냄
 
-    //int iSize = m_vecScoreInfo.size();
-    //send(client_sock, (char*)&iSize, sizeof(int), 0);
-    //for (auto& pSrc : m_vecScoreInfo)
-    //{
-    //    //send(client_sock,(char*)&pSrc,sizeof(SCOREINFO))
-    //}
-
-   // closesocket(m_ClientSocketList[iPlayerNum]);
     
+    int Size = m_vecScoreInfo.size();
+    send(client_sock, (char*)&Size, sizeof(int), 0);//벡터 사이즈 보냄
+
+    for (auto& Info : m_vecScoreInfo)
+    {
+        Size = Info->Name.size();
+        send(client_sock, (char*)&Size, sizeof(int), 0);//스트링 사이즈 보냄
+        char str[100] = { 0, };
+        strcpy(str, Info->Name.c_str());
+        send(client_sock, (char*)&str, sizeof(char)*Size, 0);
+
+        send(client_sock, (char*)&Info->fScore, sizeof(float), 0);//스트링 사이즈 보냄
+    }
+
+
+
+    EnterCriticalSection(&m_Crt);
+    m_iPlayerExit[iPlayerNum] = true;
+    LeaveCriticalSection(&m_Crt);
     return S_OK;
 }
 

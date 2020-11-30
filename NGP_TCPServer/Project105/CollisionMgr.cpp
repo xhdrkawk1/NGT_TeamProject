@@ -9,14 +9,22 @@ CCollisionMgr::~CCollisionMgr()
 {
 }
 
+static int Colinumber=0;
 void CCollisionMgr::CollisionRect(PLAYERDATA* pdata, list<OBJECT_WARNING*>& srcLst)
 {
 	RECT rc = {};
 	for (auto& pSrc : srcLst)
 	{
+		if (pdata->Alive == false)
+			continue;
+
 		if (IntersectRect(&rc, &pdata->tRect, &pSrc->tRect))
 		{
 			pdata->Alive = false;//플레이어 사망
+			Colinumber++;
+
+			if(Colinumber==2)
+				CDataMgr::GetInstance()->SaveLoadScore();
 			//cout << "충돌" << endl;
 		}
 	}
@@ -37,6 +45,11 @@ void CCollisionMgr::CollisionRect(PLAYERDATA* pdata, list<OBJECT_ARROW*>& srcLst
 			pdata->fLifeTime = GET_INSTANCE(CDataMgr)->m_fServerTime;
 			//cout << "충돌" << endl;
 			pSrc->isDead = true;
+
+			Colinumber++;
+
+			if (Colinumber == 2)
+				CDataMgr::GetInstance()->SaveLoadScore();
 		}
 	}
 }
@@ -54,6 +67,11 @@ void CCollisionMgr::CollisionRect(list<OBJECT_WARNING*>& LagerLst, list<OBJECT_A
 			}
 		}
 	}
+}
+
+void CCollisionMgr::InitColinumber()
+{
+	Colinumber = 0;
 }
 
 
